@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
-INPUT_FILE = ROOT / "checkpoint1_sample.csv"
+INPUT_FILE = ROOT / "outputs" / "checkpoint1_sample.csv"
 OUTPUT_FILE = ROOT / "outputs" / "explorer_data.json"
 
 PERIODS = {
