@@ -26,7 +26,7 @@ Our main research questions are:
 ## Data
 We use the October 2026 release (`202610`) of the Open Asset Pricing dataset, accessed through the `openassetpricing` Python package.
 
-Our initial proof of concept includes five anomalies: Book-to-Market (BM), Industry IPO Activity (IndIPO), 12-Month Momentum (Mom12m), Accruals, and Asset Growth.
+Our initial proof of concept includes five anomalies: Book-to-Market (BM), Initial Public Offerings (IndIPO), 12-Month Momentum (Mom12m), Accruals, and Asset Growth.
 
 The dataset contains 4,454 anomaly-month observations, including monthly long-short returns, publication years, economic categories, and original research sample years. Returns are expressed as monthly percentages.
 
