@@ -65,6 +65,35 @@ The `post_publication` indicator equals 0 for observations in the original sampl
 
 For our main analysis, we plan to compare original-sample returns directly with post-publication returns. We will examine the pre-publication gap separately to help distinguish declines that began before publication from those occurring afterward. We will not treat all observations with `post_publication = 0` as if they belonged to the original research sample.
 
+### Threats to Validity
+Our current results are preliminary, and several factors could affect how we interpret them:
+
+- **Correlation vs. causation:** A decline in anomaly returns after publication does not necessarily mean publication caused the decline. Market conditions, changes in investor behavior, and other factors may also explain it.
+- **Data mining and original-sample bias:** Anomalies may look especially profitable in their original research samples because researchers identified them using those historical data. We examine the pre-publication gap separately to help investigate this possibility.
+- **Unequal sample periods:** Some anomalies have much longer post-publication histories than original research samples. We plan to test equal-length windows as a robustness check.
+- **Trading costs:** Our current comparisons do not adjust for additional transaction costs or other implementation difficulties. A strategy with positive returns may not be profitable after these costs.
+- **Limited prototype sample:** We currently study only five anomalies. They were selected for our initial prototype, so we cannot assume our findings represent the entire universe of published anomalies.
+- **Portfolio construction and timing:** We rely on OpenAP's original-paper portfolios, which may use different construction methods across anomalies. We still need to verify the underlying signal timing and address possible look-ahead or selection biases.
+- **Publication timing:** Because we have publication years rather than exact publication dates, we exclude the entire publication year instead of trying to divide it into before and after publication.
+
+We will address these limitations where possible as we expand the analysis. For now, our findings are descriptive rather than causal.
+
+### Data Validation and Verification
+We have implemented several checks to help ensure our results are accurate and reproducible:
+
+1. **Merges:** Our notebook uses `validate='m:1'` when combining returns with anomaly metadata and confirms that every return matches a metadata record.
+2. **Unique observations:** We check that each anomaly-month appears only once.
+3. **Metadata:** We verify that publication years are available and that each anomaly has consistent metadata across observations.
+4. **Date consistency:** We check that original research sample years follow a logical order and end before publication.
+5. **Return values:** We check for invalid or non-finite returns before generating the website data.
+6. **Period classifications:** We tested seven boundary months for the Momentum anomaly to confirm that observations are correctly assigned to the original sample, pre-publication gap, publication year, and post-publication period.
+7. **Summary statistics:** We checked the observation counts and average monthly returns against the underlying dataset and confirmed that the website results agree with our calculations.
+8. **Reproducibility:** We successfully ran `run_all.py` in a fresh Google Colab environment and regenerated the dataset, website JSON, and summary table.
+
+Our current dataset contains 4,454 anomaly-month observations. Of these, 3,524 are included in the three comparison periods used by the website. The remaining observations fall in excluded periods.
+
+These checks support the reliability of our current prototype, but they do not replace the additional statistical and methodological tests planned for the final analysis.
+
 ## Running the Proof of Concept
 1. Open `01_seed4_poc.ipynb` in Google Colab or a Jupyter notebook environment.
 2. Run the notebook's cells in order. The first cell installs the required packages.
