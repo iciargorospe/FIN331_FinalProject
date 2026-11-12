@@ -135,3 +135,13 @@ td:first-child { font-weight: 700; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* Results section: make table span full width */
+#results .table-scroll,
+#results .table-note {
+  grid-column: 1 / -1;
+}
+
+#results .table-scroll {
+  margin-top: 18px;
+}
