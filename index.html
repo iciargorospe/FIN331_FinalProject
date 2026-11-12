@@ -14,6 +14,7 @@
     <nav aria-label="Main navigation">
       <a href="#question">The question</a>
       <a href="#method">Method</a>
+      <a href="#results">Results</a>
       <a href="#explorer">Explorer</a>
       <a href="#limits">Limits</a>
     </nav>
@@ -52,8 +53,48 @@
       </div>
     </section>
 
+<section class="intro section-wrap" id="results">
+  <div class="section-heading">
+    <span class="section-number">03</span>
+    <h2>Preliminary Results</h2>
+  </div>
+
+  <div class="intro-copy">
+    <p>
+      In our five-anomaly prototype, all five strategies
+      have lower average monthly returns after publication
+      than during their original research samples.
+    </p>
+    <p>
+      These are descriptive findings, not evidence that
+      publication caused the declines. Our final analysis
+      will expand the sample and test these differences
+      more carefully.
+    </p>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Anomaly</th>
+          <th>Original Sample</th>
+          <th>Post-Publication</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody id="results-table"></tbody>
+    </table>
+  </div>
+
+  <p class="table-note">
+    Average monthly long-short returns (%).
+    Changes are measured in percentage points per month.
+  </p>
+</section>
+
     <section class="explorer section-wrap" id="explorer">
-      <div class="section-heading"><span class="section-number">03</span><h2>Explore the returns</h2></div>
+      <div class="section-heading"><span class="section-number">04</span><h2>Explore the returns</h2></div>
       <div class="explorer-topline">
         <p>Choose an anomaly to see its mean monthly long-short return by year and period-level summaries.</p>
         <label for="anomaly-select">Anomaly <select id="anomaly-select" aria-label="Choose an anomaly"></select></label>
@@ -79,7 +120,7 @@
 
     <section class="limits-band" id="limits">
       <div class="section-wrap limits-layout">
-        <div class="section-heading"><span class="section-number">04</span><h2>Read this as a prototype</h2></div>
+        <div class="section-heading"><span class="section-number">05</span><h2>Read this as a prototype</h2></div>
         <div class="limits-copy">
           <p class="prototype-label">Five-anomaly prototype · Not final results</p>
           <p>This explorer covers only Book-to-Market, Initial Public Offerings, 12-Month Momentum, Accruals, and Asset Growth. It is a descriptive comparison, not a causal test. A change after publication does not prove publication caused the change.</p>
