@@ -28,6 +28,7 @@ fetch(DATA_URL)
     });
     status.textContent = "";
     content.hidden = false;
+    renderResults(data);
     renderSelected();
   })
   .catch((error) => {
@@ -162,5 +163,33 @@ function renderChart(anomaly) {
       marker.append(svgElement("title", {}, `${point.year}: ${point.mean_monthly_pct.toFixed(2)}% mean monthly return (${point.observations} months)`));
       svg.append(marker);
     });
+  });
+}
+
+function renderResults(data) {
+  const table = document.querySelector("#results-table");
+  table.replaceChildren();
+
+  data.anomalies.forEach((anomaly) => {
+    const original = anomaly.summary.original_sample.mean_monthly_pct;
+    const post = anomaly.summary.post_publication.mean_monthly_pct;
+    const change = post - original;
+
+    const row = document.createElement("tr");
+
+    const values = [
+      anomaly.label,
+      formatNumber(original),
+      formatNumber(post),
+      `${change >= 0 ? "+" : ""}${change.toFixed(2)} pp`
+    ];
+
+    values.forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.append(cell);
+    });
+
+    table.append(row);
   });
 }
