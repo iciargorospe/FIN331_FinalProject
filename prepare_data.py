@@ -76,16 +76,16 @@ def main():
                 "sample_start_year": int(row["sample_start_year"]),
                 "sample_end_year": int(row["sample_end_year"]),
             }
-            
-# Verify that the research sample dates make sense
-if not (
-    years["sample_start_year"]
-    <= years["sample_end_year"]
-    < years["publication_year"]
-):
-    raise ValueError(
-        f"Invalid research sample or publication years for {signal}"
-    )
+
+            # Verify that the research sample dates make sense
+            if not (
+                years["sample_start_year"]
+                <= years["sample_end_year"]
+                < years["publication_year"]
+            ):
+                raise ValueError(
+                    f"Invalid research sample or publication years for {signal}"
+                )
   
             current_metadata = {
                 **years,
