@@ -1,0 +1,16 @@
+signalname,period,observations,avg_monthly_return
+Mom12m,Original research sample,312,1.275804457764171
+Mom12m,Pre-publication gap,36,-0.38451435585730603
+Mom12m,Post-publication,384,0.8965563618089046
+Accruals,Original research sample,360,0.6867394800375037
+Accruals,Pre-publication gap,48,0.7502196206169466
+Accruals,Post-publication,348,0.09281981316358069
+AssetGrowth,Original research sample,432,1.5103342091283556
+AssetGrowth,Pre-publication gap,48,-0.41112983673023895
+AssetGrowth,Post-publication,204,0.48639667455155217
+BM,Original research sample,180,1.1558908283220586
+BM,Pre-publication gap,36,0.8899936680550335
+BM,Post-publication,540,0.6726679502389116
+IndIPO,Original research sample,152,0.6396833751497053
+IndIPO,Pre-publication gap,36,-0.03987493490778963
+IndIPO,Post-publication,408,0.47475934487487587
