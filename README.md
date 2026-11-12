@@ -56,6 +56,15 @@ Following feedback on Checkpoint 1 and the approach discussed by McLean and Pont
 
 We exclude publication-year observations and observations before the original research sample from our primary comparisons.
 
+### Period Classification and Comparison
+Our dataset includes two related variables: `period` and `post_publication`.
+
+The `period` column identifies the original research sample, pre-publication gap, publication year, post-publication period, and observations before the original sample. We use this more detailed classification for our current results and website.
+
+The `post_publication` indicator equals 0 for observations in the original sample or pre-publication gap, and 1 for observations after publication. It is missing for the publication year and observations before the original sample.
+
+For our main analysis, we plan to compare original-sample returns directly with post-publication returns. We will examine the pre-publication gap separately to help distinguish declines that began before publication from those occurring afterward. We will not treat all observations with `post_publication = 0` as if they belonged to the original research sample.
+
 ## Running the Proof of Concept
 1. Open `01_seed4_poc.ipynb` in Google Colab or a Jupyter notebook environment.
 2. Run the notebook's cells in order. The first cell installs the required packages.
