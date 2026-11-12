@@ -30,6 +30,24 @@ Our initial proof of concept includes five anomalies: Book-to-Market (BM), Initi
 
 The dataset contains 4,454 anomaly-month observations, including monthly long-short returns, publication years, economic categories, and original research sample years. Returns are expressed as monthly percentages.
 
+### Data Source and Construction
+Our data comes from Open Asset Pricing (OpenAP), developed by Andrew Chen and Tom Zimmermann. We use the October 2026 release (`202610`), accessed through the `openassetpricing` Python package (version 0.1.0).
+
+Our notebook downloads two datasets:
+- **Signal documentation:** Information about each anomaly, including its publication year, original research sample period, and category.
+- **Portfolio returns:** Monthly returns from the `op` (original-paper) portfolio collection. We select the `LS` (long-short) portfolio for each anomaly.
+
+These are portfolio returns already constructed by OpenAP. We are not calculating individual stock returns or building portfolios from scratch. Because we use the original-paper portfolio collection, the construction methods may differ across anomalies.
+
+Each observation in our dataset represents one anomaly in one month. Returns are measured in percentages per month. We use these returns to compare average profitability across the original research sample, pre-publication gap, and post-publication periods.
+
+**Data retrieval:** The pipeline successfully downloaded and processed the October 2026 release on November 12, 2026. Rerunning `run_all.py` downloads the selected release again.
+
+**Sources:**
+- OpenAP website: https://www.openassetpricing.com/
+- OpenAP source code: https://github.com/OpenSourceAP/CrossSection
+- Python package: https://pypi.org/project/openassetpricing/
+
 ## Methodology
 Following feedback on Checkpoint 1 and the approach discussed by McLean and Pontiff, we distinguish three comparison periods:
 - **Original Sample:** Years included in the original academic study.
