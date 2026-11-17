@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A five-anomaly prototype exploring long-short returns around academic publication.">
+  <title>Did Academic Research Kill the Anomalies?</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="FIN 331 project home">FIN <span>331</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#question">The question</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#explorer">Explorer</a>
+      <a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">FIN 331 · Research prototype · Seed 4</p>
+        <h1 id="page-title">Did academic research <em>kill</em> the anomalies?</h1>
+        <p class="hero-deck">Do investment strategy returns decline after academic publication?</p>
+      </div>
+      <div class="hero-stamp" aria-hidden="true"><span>Research<br>question</span><strong>01</strong></div>
+      <div class="hero-foot"><span>Evidence, not a verdict</span><span>Open Asset Pricing · <span id="data-release"></span></span></div>
+    </section>
+
+    <section class="intro section-wrap" id="question">
+      <div class="section-heading"><span class="section-number">01</span><h2>What is an anomaly?</h2></div>
+      <div class="intro-copy">
+        <p>An anomaly is a pattern in stock returns that seems difficult to explain with standard financial theory. Researchers turn these patterns into investment strategies and test whether they persist.</p>
+        <p>A <strong>long-short return</strong> is the return from holding stocks expected to do well while shorting stocks expected to do poorly. It is the difference between the two sides, reported here as a monthly percentage. If that difference shrinks after a strategy is published, it may be consistent with investors trading it away. It does not tell us why it shrank.</p>
+      </div>
+      <div class="note-line"><span class="note-mark">↳</span><span>Publication can make an idea more visible. Whether visibility changes returns is the question, not an assumption.</span></div>
+    </section>
+
+    <section class="method-band" id="method">
+      <div class="section-wrap">
+        <div class="section-heading"><span class="section-number">02</span><h2>Compare the right windows</h2></div>
+        <p class="section-lead">For each strategy, we compare returns across three distinct windows:</p>
+        <div class="timeline" aria-label="Three return comparison periods, with the publication year excluded">
+          <div class="timeline-item sample"><span class="timeline-index">A</span><h3>Original research sample</h3><p>The years covered by the original study's reported sample, including both its first and last year.</p><span class="timeline-tag">In-sample</span></div>
+          <div class="timeline-item gap"><span class="timeline-index">B</span><h3>Pre-publication gap</h3><p>The years after that sample ends and before the paper's publication year. We keep this interval separate.</p><span class="timeline-tag">Gap</span></div>
+          <div class="timeline-item post"><span class="timeline-index">C</span><h3>Post-publication</h3><p>The years after the paper's publication year.</p><span class="timeline-tag">After</span></div>
+        </div>
+        <p class="method-footnote"><strong>Excluded:</strong> returns before the original sample begins and all returns in the publication year. Since we only know the publication year, we cannot split that year into before and after the paper appeared.</p>
+      </div>
+    </section>
+
+<section class="intro section-wrap" id="results">
+  <div class="section-heading">
+    <span class="section-number">03</span>
+    <h2>Preliminary Results</h2>
+  </div>
+
+  <div class="intro-copy">
+    <p>
+      In our five-anomaly prototype, all five strategies
+      have lower average monthly returns after publication
+      than during their original research samples.
+    </p>
+    <p>
+      These are descriptive findings, not evidence that
+      publication caused the declines. Our final analysis
+      will expand the sample and test these differences
+      more carefully.
+    </p>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Anomaly</th>
+          <th>Original Sample</th>
+          <th>Post-Publication</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody id="results-table"></tbody>
+    </table>
+  </div>
+
+  <p class="table-note">
+    Average monthly long-short returns (%).
+    Changes are measured in percentage points per month.
+  </p>
+</section>
+
+    <section class="explorer section-wrap" id="explorer">
+      <div class="section-heading"><span class="section-number">04</span><h2>Explore the returns</h2></div>
+      <div class="explorer-topline">
+        <p>Choose an anomaly to see its mean monthly long-short return by year and period-level summaries.</p>
+        <label for="anomaly-select">Anomaly <select id="anomaly-select" aria-label="Choose an anomaly"></select></label>
+      </div>
+      <div id="data-status" class="data-status" role="status" aria-live="polite"></div>
+      <div id="explorer-content" hidden>
+        <div class="chart-heading"><div><p class="eyebrow">Selected strategy</p><h3 id="anomaly-title"></h3><p id="anomaly-description" class="anomaly-description"></p></div><p class="chart-unit">Mean monthly return (%)<br><span>annual average of monthly observations</span></p></div>
+        <div class="chart-legend" aria-label="Chart legend">
+          <span><i class="legend-swatch sample-swatch"></i>Original sample</span>
+          <span><i class="legend-swatch gap-swatch"></i>Pre-publication gap</span>
+          <span><i class="legend-swatch post-swatch"></i>Post-publication</span>
+        </div>
+        <div class="chart-frame"><svg id="return-chart" role="img" aria-label="Annual average monthly long-short returns"></svg></div>
+        <p class="chart-caption">Each point is the arithmetic mean of the available monthly returns in that calendar year. Values are not compounded or annualized.</p>
+        <div class="stats-heading"><h3>Period summary</h3><span id="range-note"></span></div>
+        <div class="table-scroll"><table>
+          <thead><tr><th scope="col">Comparison period</th><th scope="col">Mean / month</th><th scope="col">Median / month</th><th scope="col">Std. dev.</th><th scope="col">Months</th></tr></thead>
+          <tbody id="summary-table"></tbody>
+        </table></div>
+        <p class="table-note">Returns are percentage points per month. Summary values are arithmetic statistics across monthly observations.</p>
+      </div>
+    </section>
+
+    <section class="limits-band" id="limits">
+      <div class="section-wrap limits-layout">
+        <div class="section-heading"><span class="section-number">05</span><h2>Read this as a prototype</h2></div>
+        <div class="limits-copy">
+          <p class="prototype-label">Five-anomaly prototype · Not final results</p>
+          <p>This explorer covers only Book-to-Market, Initial Public Offerings, 12-Month Momentum, Accruals, and Asset Growth. It is a descriptive comparison, not a causal test. A change after publication does not prove publication caused the change.</p>
+          <p>Returns may also reflect changing market conditions, trading costs, implementation choices, or data updates. We do not adjust for these factors here, and the original sample dates are metadata estimates rather than a common evaluation window.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>FIN 331 · Group project</span><span>Data: <a href="https://www.openassetpricing.com/">Open Asset Pricing</a> · <span id="data-release-footer"></span></span><a href="#top">Back to top ↑</a></footer>
+</body>
+</html>

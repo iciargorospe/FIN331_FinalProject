@@ -1,0 +1,1982 @@
+{
+  "title": "Did Academic Research Kill the Anomalies?",
+  "source_file": "checkpoint1_sample.csv",
+  "data_release": "Open Asset Pricing, October 2026 (202610)",
+  "return_unit": "percent per month",
+  "periods": {
+    "original_sample": "Original research sample",
+    "gap": "Pre-publication gap",
+    "post_publication": "Post-publication"
+  },
+  "anomalies": [
+    {
+      "signal": "Mom12m",
+      "label": "12-Month Momentum",
+      "description": "Ranks stocks by their return from months t\u221212 through t\u22121, the prior 12 months.",
+      "publication_year": 1993,
+      "sample_start_year": 1964,
+      "sample_end_year": 1989,
+      "economic_category": "momentum",
+      "data_category": "Price",
+      "summary": {
+        "original_sample": {
+          "label": "Original research sample",
+          "observations": 312,
+          "mean_monthly_pct": 1.275804457764171,
+          "median_monthly_pct": 1.72666036608975,
+          "std_monthly_pct": 5.284295920181625,
+          "first_month": "1964-01",
+          "last_month": "1989-12"
+        },
+        "gap": {
+          "label": "Pre-publication gap",
+          "observations": 36,
+          "mean_monthly_pct": -0.38451435585730603,
+          "median_monthly_pct": 0.1108511582632295,
+          "std_monthly_pct": 7.578046739816518,
+          "first_month": "1990-01",
+          "last_month": "1992-12"
+        },
+        "post_publication": {
+          "label": "Post-publication",
+          "observations": 384,
+          "mean_monthly_pct": 0.8965563618089046,
+          "median_monthly_pct": 1.86727230777635,
+          "std_monthly_pct": 8.930524715789272,
+          "first_month": "1994-01",
+          "last_month": "2025-12"
+        }
+      },
+      "annual_means": [
+        {
+          "year": 1990,
+          "period": "gap",
+          "mean_monthly_pct": 1.8400735177284369,
+          "observations": 12
+        },
+        {
+          "year": 1991,
+          "period": "gap",
+          "mean_monthly_pct": -1.1505835067526742,
+          "observations": 12
+        },
+        {
+          "year": 1992,
+          "period": "gap",
+          "mean_monthly_pct": -1.843033078547681,
+          "observations": 12
+        },
+        {
+          "year": 1964,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.9752749829981304,
+          "observations": 12
+        },
+        {
+          "year": 1965,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.4460062718564373,
+          "observations": 12
+        },
+        {
+          "year": 1966,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.0975422074470431,
+          "observations": 12
+        },
+        {
+          "year": 1967,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.17310095542907183,
+          "observations": 12
+        },
+        {
+          "year": 1968,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.3876815396348454,
+          "observations": 12
+        },
+        {
+          "year": 1969,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.75212416717479,
+          "observations": 12
+        },
+        {
+          "year": 1970,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.3033970885118183,
+          "observations": 12
+        },
+        {
+          "year": 1971,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.7294307308671377,
+          "observations": 12
+        },
+        {
+          "year": 1972,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.8449462546915207,
+          "observations": 12
+        },
+        {
+          "year": 1973,
+          "period": "original_sample",
+          "mean_monthly_pct": 5.229767387735219,
+          "observations": 12
+        },
+        {
+          "year": 1974,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.6328542946544436,
+          "observations": 12
+        },
+        {
+          "year": 1975,
+          "period": "original_sample",
+          "mean_monthly_pct": -3.158788418567537,
+          "observations": 12
+        },
+        {
+          "year": 1976,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.3780551585393142,
+          "observations": 12
+        },
+        {
+          "year": 1977,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.842447935104551,
+          "observations": 12
+        },
+        {
+          "year": 1978,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.6872552532908985,
+          "observations": 12
+        },
+        {
+          "year": 1979,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.4668514142290172,
+          "observations": 12
+        },
+        {
+          "year": 1980,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.9997328829718626,
+          "observations": 12
+        },
+        {
+          "year": 1981,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.14758862960239555,
+          "observations": 12
+        },
+        {
+          "year": 1982,
+          "period": "original_sample",
+          "mean_monthly_pct": 3.9354102024534847,
+          "observations": 12
+        },
+        {
+          "year": 1983,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.5307017935687224,
+          "observations": 12
+        },
+        {
+          "year": 1984,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.70256139673685,
+          "observations": 12
+        },
+        {
+          "year": 1985,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.4954654044226812,
+          "observations": 12
+        },
+        {
+          "year": 1986,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.4035682252248647,
+          "observations": 12
+        },
+        {
+          "year": 1987,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.0168097731709205,
+          "observations": 12
+        },
+        {
+          "year": 1988,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.49811124945891405,
+          "observations": 12
+        },
+        {
+          "year": 1989,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.3558018778614294,
+          "observations": 12
+        },
+        {
+          "year": 1994,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.637327083181061,
+          "observations": 12
+        },
+        {
+          "year": 1995,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.434061898735154,
+          "observations": 12
+        },
+        {
+          "year": 1996,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.6247278861733677,
+          "observations": 12
+        },
+        {
+          "year": 1997,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.551975634869148,
+          "observations": 12
+        },
+        {
+          "year": 1998,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.9033122035996688,
+          "observations": 12
+        },
+        {
+          "year": 1999,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.434123877203153,
+          "observations": 12
+        },
+        {
+          "year": 2000,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.9697537747669593,
+          "observations": 12
+        },
+        {
+          "year": 2001,
+          "period": "post_publication",
+          "mean_monthly_pct": -3.3085921339439355,
+          "observations": 12
+        },
+        {
+          "year": 2002,
+          "period": "post_publication",
+          "mean_monthly_pct": 3.4999322058958966,
+          "observations": 12
+        },
+        {
+          "year": 2003,
+          "period": "post_publication",
+          "mean_monthly_pct": -3.8291051236152702,
+          "observations": 12
+        },
+        {
+          "year": 2004,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.5944014708779672,
+          "observations": 12
+        },
+        {
+          "year": 2005,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.761108766537974,
+          "observations": 12
+        },
+        {
+          "year": 2006,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.3410422241971828,
+          "observations": 12
+        },
+        {
+          "year": 2007,
+          "period": "post_publication",
+          "mean_monthly_pct": 3.132295781169477,
+          "observations": 12
+        },
+        {
+          "year": 2008,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.275575986628584,
+          "observations": 12
+        },
+        {
+          "year": 2009,
+          "period": "post_publication",
+          "mean_monthly_pct": -10.584738320992555,
+          "observations": 12
+        },
+        {
+          "year": 2010,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.3281287156041839,
+          "observations": 12
+        },
+        {
+          "year": 2011,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.898315242212493,
+          "observations": 12
+        },
+        {
+          "year": 2012,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.6922803335973723,
+          "observations": 12
+        },
+        {
+          "year": 2013,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.9830418868807108,
+          "observations": 12
+        },
+        {
+          "year": 2014,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.8544178885628411,
+          "observations": 12
+        },
+        {
+          "year": 2015,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.914525957433185,
+          "observations": 12
+        },
+        {
+          "year": 2016,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.7259459351125275,
+          "observations": 12
+        },
+        {
+          "year": 2017,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.866961860075804,
+          "observations": 12
+        },
+        {
+          "year": 2018,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.969146705374295,
+          "observations": 12
+        },
+        {
+          "year": 2019,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.7121319548232442,
+          "observations": 12
+        },
+        {
+          "year": 2020,
+          "period": "post_publication",
+          "mean_monthly_pct": -3.6868887292277943,
+          "observations": 12
+        },
+        {
+          "year": 2021,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.7457364749081391,
+          "observations": 12
+        },
+        {
+          "year": 2022,
+          "period": "post_publication",
+          "mean_monthly_pct": 5.707587631699444,
+          "observations": 12
+        },
+        {
+          "year": 2023,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.6890260896942197,
+          "observations": 12
+        },
+        {
+          "year": 2024,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.5863656230292986,
+          "observations": 12
+        },
+        {
+          "year": 2025,
+          "period": "post_publication",
+          "mean_monthly_pct": 3.5886560531965057,
+          "observations": 12
+        }
+      ]
+    },
+    {
+      "signal": "Accruals",
+      "label": "Accruals",
+      "description": "Ranks firms by accruals, an accounting measure based on changes in balance-sheet items relative to average assets.",
+      "publication_year": 1996,
+      "sample_start_year": 1962,
+      "sample_end_year": 1991,
+      "economic_category": "accruals",
+      "data_category": "Accounting",
+      "summary": {
+        "original_sample": {
+          "label": "Original research sample",
+          "observations": 360,
+          "mean_monthly_pct": 0.6867394800375037,
+          "median_monthly_pct": 0.6593111615113636,
+          "std_monthly_pct": 1.9463387541928447,
+          "first_month": "1962-01",
+          "last_month": "1991-12"
+        },
+        "gap": {
+          "label": "Pre-publication gap",
+          "observations": 48,
+          "mean_monthly_pct": 0.7502196206169466,
+          "median_monthly_pct": 0.6764588115014295,
+          "std_monthly_pct": 1.0183116497639708,
+          "first_month": "1992-01",
+          "last_month": "1995-12"
+        },
+        "post_publication": {
+          "label": "Post-publication",
+          "observations": 348,
+          "mean_monthly_pct": 0.09281981316358069,
+          "median_monthly_pct": 0.026369863155424653,
+          "std_monthly_pct": 1.8620914741614,
+          "first_month": "1997-01",
+          "last_month": "2025-12"
+        }
+      },
+      "annual_means": [
+        {
+          "year": 1992,
+          "period": "gap",
+          "mean_monthly_pct": 1.0420022467118193,
+          "observations": 12
+        },
+        {
+          "year": 1993,
+          "period": "gap",
+          "mean_monthly_pct": 0.7271651178375561,
+          "observations": 12
+        },
+        {
+          "year": 1994,
+          "period": "gap",
+          "mean_monthly_pct": 0.8733248468719564,
+          "observations": 12
+        },
+        {
+          "year": 1995,
+          "period": "gap",
+          "mean_monthly_pct": 0.3583862710464546,
+          "observations": 12
+        },
+        {
+          "year": 1962,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.992582077352473,
+          "observations": 12
+        },
+        {
+          "year": 1963,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.1271777679868988,
+          "observations": 12
+        },
+        {
+          "year": 1964,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.9369854157072459,
+          "observations": 12
+        },
+        {
+          "year": 1965,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.29016276168941657,
+          "observations": 12
+        },
+        {
+          "year": 1966,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.0253003109225518,
+          "observations": 12
+        },
+        {
+          "year": 1967,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.6677246080284023,
+          "observations": 12
+        },
+        {
+          "year": 1968,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.9072889676866347,
+          "observations": 12
+        },
+        {
+          "year": 1969,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.661010835477489,
+          "observations": 12
+        },
+        {
+          "year": 1970,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.5469196906796947,
+          "observations": 12
+        },
+        {
+          "year": 1971,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.2824335644618109,
+          "observations": 12
+        },
+        {
+          "year": 1972,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.9634818596276549,
+          "observations": 12
+        },
+        {
+          "year": 1973,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.148113187219414,
+          "observations": 12
+        },
+        {
+          "year": 1974,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.3645925573366857,
+          "observations": 12
+        },
+        {
+          "year": 1975,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.1759162234192061,
+          "observations": 12
+        },
+        {
+          "year": 1976,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.44191595624064733,
+          "observations": 12
+        },
+        {
+          "year": 1977,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.6149540128612528,
+          "observations": 12
+        },
+        {
+          "year": 1978,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.014398180248293509,
+          "observations": 12
+        },
+        {
+          "year": 1979,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.6344139059875356,
+          "observations": 12
+        },
+        {
+          "year": 1980,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.5477494402331938,
+          "observations": 12
+        },
+        {
+          "year": 1981,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.5585638939486267,
+          "observations": 12
+        },
+        {
+          "year": 1982,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.2847518849141405,
+          "observations": 12
+        },
+        {
+          "year": 1983,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.5759988883507452,
+          "observations": 12
+        },
+        {
+          "year": 1984,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.9282337404268501,
+          "observations": 12
+        },
+        {
+          "year": 1985,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.3500692552818494,
+          "observations": 12
+        },
+        {
+          "year": 1986,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.7511165477742652,
+          "observations": 12
+        },
+        {
+          "year": 1987,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.2897154475285524,
+          "observations": 12
+        },
+        {
+          "year": 1988,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.6116117142070958,
+          "observations": 12
+        },
+        {
+          "year": 1989,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.0855512319764242,
+          "observations": 12
+        },
+        {
+          "year": 1990,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.3893545685424243,
+          "observations": 12
+        },
+        {
+          "year": 1991,
+          "period": "original_sample",
+          "mean_monthly_pct": -1.082985041067058,
+          "observations": 12
+        },
+        {
+          "year": 1997,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.3775579187173388,
+          "observations": 12
+        },
+        {
+          "year": 1998,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.2605628741343222,
+          "observations": 12
+        },
+        {
+          "year": 1999,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.8940207283507402,
+          "observations": 12
+        },
+        {
+          "year": 2000,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.066849110561662,
+          "observations": 12
+        },
+        {
+          "year": 2001,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.43035812762828834,
+          "observations": 12
+        },
+        {
+          "year": 2002,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.5708623134942704,
+          "observations": 12
+        },
+        {
+          "year": 2003,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.46957145650969884,
+          "observations": 12
+        },
+        {
+          "year": 2004,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.28175011785354387,
+          "observations": 12
+        },
+        {
+          "year": 2005,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.5313992559403083,
+          "observations": 12
+        },
+        {
+          "year": 2006,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.19026677044623266,
+          "observations": 12
+        },
+        {
+          "year": 2007,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.8770602199418562,
+          "observations": 12
+        },
+        {
+          "year": 2008,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.3387544307984958,
+          "observations": 12
+        },
+        {
+          "year": 2009,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.8566114368926735,
+          "observations": 12
+        },
+        {
+          "year": 2010,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.3588735379455279,
+          "observations": 12
+        },
+        {
+          "year": 2011,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.5570601380022515,
+          "observations": 12
+        },
+        {
+          "year": 2012,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.8501603558873669,
+          "observations": 12
+        },
+        {
+          "year": 2013,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.11261814861553435,
+          "observations": 12
+        },
+        {
+          "year": 2014,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.8510870527005503,
+          "observations": 12
+        },
+        {
+          "year": 2015,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.8449130622585208,
+          "observations": 12
+        },
+        {
+          "year": 2016,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.3117626999471288,
+          "observations": 12
+        },
+        {
+          "year": 2017,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.17241580407283258,
+          "observations": 12
+        },
+        {
+          "year": 2018,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.3380310805580201,
+          "observations": 12
+        },
+        {
+          "year": 2019,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.34826751571071984,
+          "observations": 12
+        },
+        {
+          "year": 2020,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.7514718920638958,
+          "observations": 12
+        },
+        {
+          "year": 2021,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.5967690773751687,
+          "observations": 12
+        },
+        {
+          "year": 2022,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.5344181044276517,
+          "observations": 12
+        },
+        {
+          "year": 2023,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.1995136078786734,
+          "observations": 12
+        },
+        {
+          "year": 2024,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.4287931876484481,
+          "observations": 12
+        },
+        {
+          "year": 2025,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.32113845531978363,
+          "observations": 12
+        }
+      ]
+    },
+    {
+      "signal": "AssetGrowth",
+      "label": "Asset Growth",
+      "description": "Ranks firms by the annual growth rate of their total assets.",
+      "publication_year": 2008,
+      "sample_start_year": 1968,
+      "sample_end_year": 2003,
+      "economic_category": "investment",
+      "data_category": "Accounting",
+      "summary": {
+        "original_sample": {
+          "label": "Original research sample",
+          "observations": 432,
+          "mean_monthly_pct": 1.5103342091283556,
+          "median_monthly_pct": 1.0642595003109498,
+          "std_monthly_pct": 4.046064694235907,
+          "first_month": "1968-01",
+          "last_month": "2003-12"
+        },
+        "gap": {
+          "label": "Pre-publication gap",
+          "observations": 48,
+          "mean_monthly_pct": -0.41112983673023895,
+          "median_monthly_pct": -0.716266986817087,
+          "std_monthly_pct": 3.3021237996822435,
+          "first_month": "2004-01",
+          "last_month": "2007-12"
+        },
+        "post_publication": {
+          "label": "Post-publication",
+          "observations": 204,
+          "mean_monthly_pct": 0.48639667455155217,
+          "median_monthly_pct": 0.284104615639098,
+          "std_monthly_pct": 3.5782412560954944,
+          "first_month": "2009-01",
+          "last_month": "2025-12"
+        }
+      },
+      "annual_means": [
+        {
+          "year": 2004,
+          "period": "gap",
+          "mean_monthly_pct": 0.24488091562544573,
+          "observations": 12
+        },
+        {
+          "year": 2005,
+          "period": "gap",
+          "mean_monthly_pct": -1.0095782894105323,
+          "observations": 12
+        },
+        {
+          "year": 2006,
+          "period": "gap",
+          "mean_monthly_pct": 0.5440085593279234,
+          "observations": 12
+        },
+        {
+          "year": 2007,
+          "period": "gap",
+          "mean_monthly_pct": -1.4238305324637925,
+          "observations": 12
+        },
+        {
+          "year": 1968,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.41576442991545,
+          "observations": 12
+        },
+        {
+          "year": 1969,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.05809640360247884,
+          "observations": 12
+        },
+        {
+          "year": 1970,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.3663269208377755,
+          "observations": 12
+        },
+        {
+          "year": 1971,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.40786089821162363,
+          "observations": 12
+        },
+        {
+          "year": 1972,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.5733931448418126,
+          "observations": 12
+        },
+        {
+          "year": 1973,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.8771060637494368,
+          "observations": 12
+        },
+        {
+          "year": 1974,
+          "period": "original_sample",
+          "mean_monthly_pct": 3.117530395462774,
+          "observations": 12
+        },
+        {
+          "year": 1975,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.8308050595904095,
+          "observations": 12
+        },
+        {
+          "year": 1976,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.383011378694544,
+          "observations": 12
+        },
+        {
+          "year": 1977,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.2079971679299109,
+          "observations": 12
+        },
+        {
+          "year": 1978,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.201786289777533,
+          "observations": 12
+        },
+        {
+          "year": 1979,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.1931209742846524,
+          "observations": 12
+        },
+        {
+          "year": 1980,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.5464291676997154,
+          "observations": 12
+        },
+        {
+          "year": 1981,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.3274069356550418,
+          "observations": 12
+        },
+        {
+          "year": 1982,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.595160122502631,
+          "observations": 12
+        },
+        {
+          "year": 1983,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.872466305223748,
+          "observations": 12
+        },
+        {
+          "year": 1984,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.5046634704038045,
+          "observations": 12
+        },
+        {
+          "year": 1985,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.49782599334180905,
+          "observations": 12
+        },
+        {
+          "year": 1986,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.0145133679042386,
+          "observations": 12
+        },
+        {
+          "year": 1987,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.199430126097956,
+          "observations": 12
+        },
+        {
+          "year": 1988,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.6697905799996655,
+          "observations": 12
+        },
+        {
+          "year": 1989,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.3576329552030783,
+          "observations": 12
+        },
+        {
+          "year": 1990,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.8424000905890356,
+          "observations": 12
+        },
+        {
+          "year": 1991,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.1406771574466954,
+          "observations": 12
+        },
+        {
+          "year": 1992,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.4955817581201543,
+          "observations": 12
+        },
+        {
+          "year": 1993,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.4813328386586333,
+          "observations": 12
+        },
+        {
+          "year": 1994,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.4653848980600657,
+          "observations": 12
+        },
+        {
+          "year": 1995,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.6494020116271875,
+          "observations": 12
+        },
+        {
+          "year": 1996,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.3585546037189042,
+          "observations": 12
+        },
+        {
+          "year": 1997,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.077263074069441,
+          "observations": 12
+        },
+        {
+          "year": 1998,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.608276510676838,
+          "observations": 12
+        },
+        {
+          "year": 1999,
+          "period": "original_sample",
+          "mean_monthly_pct": 5.3714931878182,
+          "observations": 12
+        },
+        {
+          "year": 2000,
+          "period": "original_sample",
+          "mean_monthly_pct": 3.61254959826778,
+          "observations": 12
+        },
+        {
+          "year": 2001,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.5971205569797342,
+          "observations": 12
+        },
+        {
+          "year": 2002,
+          "period": "original_sample",
+          "mean_monthly_pct": 3.9482209818906946,
+          "observations": 12
+        },
+        {
+          "year": 2003,
+          "period": "original_sample",
+          "mean_monthly_pct": 4.594166431850394,
+          "observations": 12
+        },
+        {
+          "year": 2009,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.985378713734112,
+          "observations": 12
+        },
+        {
+          "year": 2010,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.2713270596057,
+          "observations": 12
+        },
+        {
+          "year": 2011,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.3806762421872374,
+          "observations": 12
+        },
+        {
+          "year": 2012,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.6432906331419026,
+          "observations": 12
+        },
+        {
+          "year": 2013,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.687538958254613,
+          "observations": 12
+        },
+        {
+          "year": 2014,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.248379253569641,
+          "observations": 12
+        },
+        {
+          "year": 2015,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.23466249380498802,
+          "observations": 12
+        },
+        {
+          "year": 2016,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.1099632288377594,
+          "observations": 12
+        },
+        {
+          "year": 2017,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.6274053144040335,
+          "observations": 12
+        },
+        {
+          "year": 2018,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.9115954106380363,
+          "observations": 12
+        },
+        {
+          "year": 2019,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.09383535877982709,
+          "observations": 12
+        },
+        {
+          "year": 2020,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.7325487586872448,
+          "observations": 12
+        },
+        {
+          "year": 2021,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.3521834170291211,
+          "observations": 12
+        },
+        {
+          "year": 2022,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.9965222017177755,
+          "observations": 12
+        },
+        {
+          "year": 2023,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.5149004077167524,
+          "observations": 12
+        },
+        {
+          "year": 2024,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.5997539974021723,
+          "observations": 12
+        },
+        {
+          "year": 2025,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.8988010251291536,
+          "observations": 12
+        }
+      ]
+    },
+    {
+      "signal": "BM",
+      "label": "Book-to-Market (BM)",
+      "description": "Ranks firms by book-to-market: accounting book equity relative to market equity.",
+      "publication_year": 1980,
+      "sample_start_year": 1962,
+      "sample_end_year": 1976,
+      "economic_category": "valuation",
+      "data_category": "Accounting",
+      "summary": {
+        "original_sample": {
+          "label": "Original research sample",
+          "observations": 180,
+          "mean_monthly_pct": 1.1558908283220586,
+          "median_monthly_pct": 0.592925326953748,
+          "std_monthly_pct": 4.051565051761009,
+          "first_month": "1962-01",
+          "last_month": "1976-12"
+        },
+        "gap": {
+          "label": "Pre-publication gap",
+          "observations": 36,
+          "mean_monthly_pct": 0.8899936680550335,
+          "median_monthly_pct": 1.0014800182688681,
+          "std_monthly_pct": 3.3315652876634005,
+          "first_month": "1977-01",
+          "last_month": "1979-12"
+        },
+        "post_publication": {
+          "label": "Post-publication",
+          "observations": 540,
+          "mean_monthly_pct": 0.6726679502389116,
+          "median_monthly_pct": 0.508436270369375,
+          "std_monthly_pct": 4.405587587199176,
+          "first_month": "1981-01",
+          "last_month": "2025-12"
+        }
+      },
+      "annual_means": [
+        {
+          "year": 1977,
+          "period": "gap",
+          "mean_monthly_pct": 1.6228617092267128,
+          "observations": 12
+        },
+        {
+          "year": 1978,
+          "period": "gap",
+          "mean_monthly_pct": 1.301810462756991,
+          "observations": 12
+        },
+        {
+          "year": 1979,
+          "period": "gap",
+          "mean_monthly_pct": -0.25469116781860335,
+          "observations": 12
+        },
+        {
+          "year": 1962,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.117810005482457,
+          "observations": 12
+        },
+        {
+          "year": 1963,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.8858560655901125,
+          "observations": 12
+        },
+        {
+          "year": 1964,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.8306362528259034,
+          "observations": 12
+        },
+        {
+          "year": 1965,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.0523935461699319,
+          "observations": 12
+        },
+        {
+          "year": 1966,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.48211487286811827,
+          "observations": 12
+        },
+        {
+          "year": 1967,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.5069736483400973,
+          "observations": 12
+        },
+        {
+          "year": 1968,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.6344670716500924,
+          "observations": 12
+        },
+        {
+          "year": 1969,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.1900256145819083,
+          "observations": 12
+        },
+        {
+          "year": 1970,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.2238523499364766,
+          "observations": 12
+        },
+        {
+          "year": 1971,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.6612033741166388,
+          "observations": 12
+        },
+        {
+          "year": 1972,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.2929116890747264,
+          "observations": 12
+        },
+        {
+          "year": 1973,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.9706551897460516,
+          "observations": 12
+        },
+        {
+          "year": 1974,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.8671037569476518,
+          "observations": 12
+        },
+        {
+          "year": 1975,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.4033128178790355,
+          "observations": 12
+        },
+        {
+          "year": 1976,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.8857338927550087,
+          "observations": 12
+        },
+        {
+          "year": 1981,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.236169329808614,
+          "observations": 12
+        },
+        {
+          "year": 1982,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.9091739031440227,
+          "observations": 12
+        },
+        {
+          "year": 1983,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.5618058748081056,
+          "observations": 12
+        },
+        {
+          "year": 1984,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.2407081004593399,
+          "observations": 12
+        },
+        {
+          "year": 1985,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.874928862659875,
+          "observations": 12
+        },
+        {
+          "year": 1986,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.18738080266941337,
+          "observations": 12
+        },
+        {
+          "year": 1987,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.6827239505872152,
+          "observations": 12
+        },
+        {
+          "year": 1988,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.9400081188968141,
+          "observations": 12
+        },
+        {
+          "year": 1989,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.5822979272000572,
+          "observations": 12
+        },
+        {
+          "year": 1990,
+          "period": "post_publication",
+          "mean_monthly_pct": -2.156836823847277,
+          "observations": 12
+        },
+        {
+          "year": 1991,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.8954891100268102,
+          "observations": 12
+        },
+        {
+          "year": 1992,
+          "period": "post_publication",
+          "mean_monthly_pct": 3.64503961090531,
+          "observations": 12
+        },
+        {
+          "year": 1993,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.211835050950663,
+          "observations": 12
+        },
+        {
+          "year": 1994,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.8480569594810926,
+          "observations": 12
+        },
+        {
+          "year": 1995,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.04238089166413336,
+          "observations": 12
+        },
+        {
+          "year": 1996,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.9508851327184348,
+          "observations": 12
+        },
+        {
+          "year": 1997,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.9827288880593379,
+          "observations": 12
+        },
+        {
+          "year": 1998,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.760944983360026,
+          "observations": 12
+        },
+        {
+          "year": 1999,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.0473064434555062,
+          "observations": 12
+        },
+        {
+          "year": 2000,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.45396818235056996,
+          "observations": 12
+        },
+        {
+          "year": 2001,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.8816877038232256,
+          "observations": 12
+        },
+        {
+          "year": 2002,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.188141085319922,
+          "observations": 12
+        },
+        {
+          "year": 2003,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.1932888956954235,
+          "observations": 12
+        },
+        {
+          "year": 2004,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.02107594941044,
+          "observations": 12
+        },
+        {
+          "year": 2005,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.454553032505093,
+          "observations": 12
+        },
+        {
+          "year": 2006,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.6001350027625038,
+          "observations": 12
+        },
+        {
+          "year": 2007,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.3309726153755332,
+          "observations": 12
+        },
+        {
+          "year": 2008,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.07586173481568503,
+          "observations": 12
+        },
+        {
+          "year": 2009,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.549554194931012,
+          "observations": 12
+        },
+        {
+          "year": 2010,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.2264041233968932,
+          "observations": 12
+        },
+        {
+          "year": 2011,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.2245591238757676,
+          "observations": 12
+        },
+        {
+          "year": 2012,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.3161684417307929,
+          "observations": 12
+        },
+        {
+          "year": 2013,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.44431312096192604,
+          "observations": 12
+        },
+        {
+          "year": 2014,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.8469223647216595,
+          "observations": 12
+        },
+        {
+          "year": 2015,
+          "period": "post_publication",
+          "mean_monthly_pct": -2.797356988325547,
+          "observations": 12
+        },
+        {
+          "year": 2016,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.0037242541705007,
+          "observations": 12
+        },
+        {
+          "year": 2017,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.8952716163610188,
+          "observations": 12
+        },
+        {
+          "year": 2018,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.8564779351169538,
+          "observations": 12
+        },
+        {
+          "year": 2019,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.301167601051839,
+          "observations": 12
+        },
+        {
+          "year": 2020,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.0964503850865784,
+          "observations": 12
+        },
+        {
+          "year": 2021,
+          "period": "post_publication",
+          "mean_monthly_pct": 3.4988094514556605,
+          "observations": 12
+        },
+        {
+          "year": 2022,
+          "period": "post_publication",
+          "mean_monthly_pct": 3.975398534625689,
+          "observations": 12
+        },
+        {
+          "year": 2023,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.16203903053820803,
+          "observations": 12
+        },
+        {
+          "year": 2024,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.003999559502500527,
+          "observations": 12
+        },
+        {
+          "year": 2025,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.080352547543948,
+          "observations": 12
+        }
+      ]
+    },
+    {
+      "signal": "IndIPO",
+      "label": "Initial Public Offerings (IndIPO)",
+      "description": "Flags firms that went public 6 to 36 months earlier; it is a firm-level IPO signal, not an industry-wide measure.",
+      "publication_year": 1991,
+      "sample_start_year": 1975,
+      "sample_end_year": 1987,
+      "economic_category": "external financing",
+      "data_category": "Event",
+      "summary": {
+        "original_sample": {
+          "label": "Original research sample",
+          "observations": 152,
+          "mean_monthly_pct": 0.6396833751497053,
+          "median_monthly_pct": 0.7201352372844629,
+          "std_monthly_pct": 3.487741493075715,
+          "first_month": "1975-05",
+          "last_month": "1987-12"
+        },
+        "gap": {
+          "label": "Pre-publication gap",
+          "observations": 36,
+          "mean_monthly_pct": -0.03987493490778963,
+          "median_monthly_pct": 0.15369569662833185,
+          "std_monthly_pct": 1.1731812014801848,
+          "first_month": "1988-01",
+          "last_month": "1990-12"
+        },
+        "post_publication": {
+          "label": "Post-publication",
+          "observations": 408,
+          "mean_monthly_pct": 0.47475934487487587,
+          "median_monthly_pct": 0.475984182261031,
+          "std_monthly_pct": 3.6452855117326393,
+          "first_month": "1992-01",
+          "last_month": "2025-12"
+        }
+      },
+      "annual_means": [
+        {
+          "year": 1988,
+          "period": "gap",
+          "mean_monthly_pct": -0.28668667845919715,
+          "observations": 12
+        },
+        {
+          "year": 1989,
+          "period": "gap",
+          "mean_monthly_pct": 0.1054270413990348,
+          "observations": 12
+        },
+        {
+          "year": 1990,
+          "period": "gap",
+          "mean_monthly_pct": 0.06163483233679343,
+          "observations": 12
+        },
+        {
+          "year": 1975,
+          "period": "original_sample",
+          "mean_monthly_pct": 3.3129134367296134,
+          "observations": 8
+        },
+        {
+          "year": 1976,
+          "period": "original_sample",
+          "mean_monthly_pct": 2.371515147788648,
+          "observations": 12
+        },
+        {
+          "year": 1977,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.12085775646932752,
+          "observations": 12
+        },
+        {
+          "year": 1978,
+          "period": "original_sample",
+          "mean_monthly_pct": -1.0043088695916946,
+          "observations": 12
+        },
+        {
+          "year": 1979,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.28289822203688564,
+          "observations": 12
+        },
+        {
+          "year": 1980,
+          "period": "original_sample",
+          "mean_monthly_pct": -1.8461040361307248,
+          "observations": 12
+        },
+        {
+          "year": 1981,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.378257278473629,
+          "observations": 12
+        },
+        {
+          "year": 1982,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.5706523675624443,
+          "observations": 12
+        },
+        {
+          "year": 1983,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.789296693095846,
+          "observations": 12
+        },
+        {
+          "year": 1984,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.9928409488469577,
+          "observations": 12
+        },
+        {
+          "year": 1985,
+          "period": "original_sample",
+          "mean_monthly_pct": -0.3440644817348356,
+          "observations": 12
+        },
+        {
+          "year": 1986,
+          "period": "original_sample",
+          "mean_monthly_pct": 0.6928646884795188,
+          "observations": 12
+        },
+        {
+          "year": 1987,
+          "period": "original_sample",
+          "mean_monthly_pct": 1.4551378561876274,
+          "observations": 12
+        },
+        {
+          "year": 1992,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.0421762672469286,
+          "observations": 12
+        },
+        {
+          "year": 1993,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.3153267980958707,
+          "observations": 12
+        },
+        {
+          "year": 1994,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.0131513625272235,
+          "observations": 12
+        },
+        {
+          "year": 1995,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.3812432737232994,
+          "observations": 12
+        },
+        {
+          "year": 1996,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.7986642328738823,
+          "observations": 12
+        },
+        {
+          "year": 1997,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.185258268481437,
+          "observations": 12
+        },
+        {
+          "year": 1998,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.35226438765226015,
+          "observations": 12
+        },
+        {
+          "year": 1999,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.2813808320587596,
+          "observations": 12
+        },
+        {
+          "year": 2000,
+          "period": "post_publication",
+          "mean_monthly_pct": 4.693277305642091,
+          "observations": 12
+        },
+        {
+          "year": 2001,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.5386356256274909,
+          "observations": 12
+        },
+        {
+          "year": 2002,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.3777653660860425,
+          "observations": 12
+        },
+        {
+          "year": 2003,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.581318841588446,
+          "observations": 12
+        },
+        {
+          "year": 2004,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.22237457152294016,
+          "observations": 12
+        },
+        {
+          "year": 2005,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.09353615380217442,
+          "observations": 12
+        },
+        {
+          "year": 2006,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.08734107740223566,
+          "observations": 12
+        },
+        {
+          "year": 2007,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.1630476013620275,
+          "observations": 12
+        },
+        {
+          "year": 2008,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.213131091633425,
+          "observations": 12
+        },
+        {
+          "year": 2009,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.7541753646053527,
+          "observations": 12
+        },
+        {
+          "year": 2010,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.5403018224128235,
+          "observations": 12
+        },
+        {
+          "year": 2011,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.1214452731362856,
+          "observations": 12
+        },
+        {
+          "year": 2012,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.0242589872657248,
+          "observations": 12
+        },
+        {
+          "year": 2013,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.3848522646947352,
+          "observations": 12
+        },
+        {
+          "year": 2014,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.12093701800665184,
+          "observations": 12
+        },
+        {
+          "year": 2015,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.769906417391128,
+          "observations": 12
+        },
+        {
+          "year": 2016,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.516044821969527,
+          "observations": 12
+        },
+        {
+          "year": 2017,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.7455584035224961,
+          "observations": 12
+        },
+        {
+          "year": 2018,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.22734216980496386,
+          "observations": 12
+        },
+        {
+          "year": 2019,
+          "period": "post_publication",
+          "mean_monthly_pct": -0.5337607775374598,
+          "observations": 12
+        },
+        {
+          "year": 2020,
+          "period": "post_publication",
+          "mean_monthly_pct": -1.3291971352677932,
+          "observations": 12
+        },
+        {
+          "year": 2021,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.9018656665846185,
+          "observations": 12
+        },
+        {
+          "year": 2022,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.7758984461896746,
+          "observations": 12
+        },
+        {
+          "year": 2023,
+          "period": "post_publication",
+          "mean_monthly_pct": 0.0521958258188654,
+          "observations": 12
+        },
+        {
+          "year": 2024,
+          "period": "post_publication",
+          "mean_monthly_pct": 1.0060789612454644,
+          "observations": 12
+        },
+        {
+          "year": 2025,
+          "period": "post_publication",
+          "mean_monthly_pct": 2.3209849551915047,
+          "observations": 12
+        }
+      ]
+    }
+  ]
+}
