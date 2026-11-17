@@ -73,4 +73,15 @@ with (OUTPUTS / "period_summary.csv").open(
                 summary["mean_monthly_pct"]
             ])
 
+# Step 4: Run our panel regression analysis
+print("Step 4: Running panel regressions...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "regression_analysis.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "prototype_regression_results.csv").exists()
+
 print("Pipeline completed successfully!")
