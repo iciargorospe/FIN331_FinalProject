@@ -1,4 +1,4 @@
-# Run the entire Checkpoint 2 pipeline
+# Run the full FIN331 project analysis pipeline
 
 from pathlib import Path
 import subprocess
@@ -94,5 +94,16 @@ subprocess.run(
 )
 
 assert (OUTPUTS / "prototype_anomaly_tests.csv").exists()
+
+# Step 6: Calculate economic magnitude and trading-cost sensitivity
+print("Step 6: Running economic analysis...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "economic_analysis.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "prototype_economic_results.csv").exists()
 
 print("Pipeline completed successfully!")
