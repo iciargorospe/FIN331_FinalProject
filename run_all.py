@@ -1,4 +1,4 @@
-# Run the entire Checkpoint 2 pipeline
+# Run the full FIN331 project analysis pipeline
 
 from pathlib import Path
 import subprocess
@@ -72,5 +72,38 @@ with (OUTPUTS / "period_summary.csv").open(
                 summary["observations"],
                 summary["mean_monthly_pct"]
             ])
+
+# Step 4: Run our panel regression analysis
+print("Step 4: Running panel regressions...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "regression_analysis.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "prototype_regression_results.csv").exists()
+
+# Step 5: Run individual anomaly significance tests
+print("Step 5: Running anomaly significance tests...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "anomaly_tests.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "prototype_anomaly_tests.csv").exists()
+
+# Step 6: Calculate economic magnitude and trading-cost sensitivity
+print("Step 6: Running economic analysis...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "economic_analysis.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "prototype_economic_results.csv").exists()
 
 print("Pipeline completed successfully!")

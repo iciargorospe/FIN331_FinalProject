@@ -3,7 +3,7 @@
 **Live Dashboard:** https://iciargorospe.github.io/FIN331_FinalProject/
 
 ## Reproducing Our Results
-To rebuild the dataset, website data, and results table from scratch:
+To rebuild our dataset, website data, summary statistics, and statistical analyses from scratch:
 
 ```bash
 pip install -r requirements.txt
@@ -14,6 +14,9 @@ This generates:
 - `outputs/checkpoint1_sample.csv`
 - `outputs/explorer_data.json`
 - `outputs/period_summary.csv`
+- `outputs/prototype_regression_results.csv`
+- `outputs/prototype_anomaly_tests.csv`
+- `outputs/prototype_economic_results.csv`
 
 ## Project Overview
 Our group is investigating whether investment anomalies become less profitable after their findings are published in academic research.
@@ -63,7 +66,7 @@ The `period` column identifies the original research sample, pre-publication gap
 
 The `post_publication` indicator equals 0 for observations in the original sample or pre-publication gap, and 1 for observations after publication. It is missing for the publication year and observations before the original sample.
 
-For our main analysis, we plan to compare original-sample returns directly with post-publication returns. We will examine the pre-publication gap separately to help distinguish declines that began before publication from those occurring afterward. We will not treat all observations with `post_publication = 0` as if they belonged to the original research sample.
+Our analysis compares original-sample returns with post-publication returns and examines the pre-publication gap separately. We also implemented panel regressions with calendar-month fixed effects to help distinguish publication-related changes from broader calendar-time trends.
 
 ### Threats to Validity
 Our current results are preliminary, and several factors could affect how we interpret them:
@@ -71,7 +74,7 @@ Our current results are preliminary, and several factors could affect how we int
 - **Correlation vs. causation:** A decline in anomaly returns after publication does not necessarily mean publication caused the decline. Market conditions, changes in investor behavior, and other factors may also explain it.
 - **Data mining and original-sample bias:** Anomalies may look especially profitable in their original research samples because researchers identified them using those historical data. We examine the pre-publication gap separately to help investigate this possibility.
 - **Unequal sample periods:** Some anomalies have much longer post-publication histories than original research samples. We plan to test equal-length windows as a robustness check.
-- **Trading costs:** Our current comparisons do not adjust for additional transaction costs or other implementation difficulties. A strategy with positive returns may not be profitable after these costs.
+- **Trading costs:** We conduct a sensitivity analysis using hypothetical monthly trading costs of 0, 25, and 50 basis points. However, these assumptions do not reflect each anomaly's actual transaction costs or trading difficulty.
 - **Limited prototype sample:** We currently study only five anomalies. They were selected for our initial prototype, so we cannot assume our findings represent the entire universe of published anomalies.
 - **Portfolio construction and timing:** We rely on OpenAP's original-paper portfolios, which may use different construction methods across anomalies. We still need to verify the underlying signal timing and address possible look-ahead or selection biases.
 - **Publication timing:** Because we have publication years rather than exact publication dates, we exclude the entire publication year instead of trying to divide it into before and after publication.
@@ -96,7 +99,7 @@ These checks support the reliability of our current prototype, but they do not r
 
 ## Running the Proof of Concept
 1. Open `01_seed4_poc.ipynb` in Google Colab or a Jupyter notebook environment.
-2. Run the notebook's cells in order. The first cell installs the required packages.
+2. Install the dependencies using pip install -r requirements.txt before running the notebook, then run its cells in order.
 3. The notebook downloads the data, constructs the dataset, and performs validation checks.
 4. The resulting CSV is saved to `outputs/checkpoint1_sample.csv`.
 
@@ -120,4 +123,9 @@ The website displays arithmetic average monthly returns. The chart's annual poin
 This website is currently a descriptive prototype using five anomalies, not our final analysis. Differences in returns before and after publication do not establish that publication caused those changes.
 
 ## Current Status
-Checkpoint 1 establishes our initial dataset and methodology using five anomalies. Our next steps are to expand the analysis, evaluate statistical significance, compare anomaly categories, and develop the interactive website further to present our findings.
+We have completed our five-anomaly prototype, including the original dataset, interactive website, panel regressions with calendar-month fixed effects, individual statistical significance tests with a Benjamini-Hochberg multiple-testing adjustment, and economic magnitude and trading-cost sensitivity analyses.
+
+All analyses are integrated into `run_all.py` and have been reproduced successfully in a fresh Google Colab notebook.
+
+Our next steps are to expand the analysis to the broader Open Asset Pricing anomaly universe, investigate differences across anomaly categories, and develop our final dashboard and research conclusions. Our current findings are preliminary and do not establish causation.
+
