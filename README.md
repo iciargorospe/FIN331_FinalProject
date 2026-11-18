@@ -3,7 +3,7 @@
 **Live Dashboard:** https://iciargorospe.github.io/FIN331_FinalProject/
 
 ## Reproducing Our Results
-To rebuild the dataset, website data, and results table from scratch:
+To rebuild our dataset, website data, summary statistics, and statistical analyses from scratch:
 
 ```bash
 pip install -r requirements.txt
@@ -14,6 +14,9 @@ This generates:
 - `outputs/checkpoint1_sample.csv`
 - `outputs/explorer_data.json`
 - `outputs/period_summary.csv`
+- `outputs/prototype_regression_results.csv`
+- `outputs/prototype_anomaly_tests.csv`
+- `outputs/prototype_economic_results.csv`
 
 ## Project Overview
 Our group is investigating whether investment anomalies become less profitable after their findings are published in academic research.
@@ -96,7 +99,7 @@ These checks support the reliability of our current prototype, but they do not r
 
 ## Running the Proof of Concept
 1. Open `01_seed4_poc.ipynb` in Google Colab or a Jupyter notebook environment.
-2. Run the notebook's cells in order. The first cell installs the required packages.
+2. Install the dependencies using pip install -r requirements.txt before running the notebook, then run its cells in order.
 3. The notebook downloads the data, constructs the dataset, and performs validation checks.
 4. The resulting CSV is saved to `outputs/checkpoint1_sample.csv`.
 
@@ -120,4 +123,9 @@ The website displays arithmetic average monthly returns. The chart's annual poin
 This website is currently a descriptive prototype using five anomalies, not our final analysis. Differences in returns before and after publication do not establish that publication caused those changes.
 
 ## Current Status
-Checkpoint 1 establishes our initial dataset and methodology using five anomalies. Our next steps are to expand the analysis, evaluate statistical significance, compare anomaly categories, and develop the interactive website further to present our findings.
+We have completed our five-anomaly prototype, including the original dataset, interactive website, panel regressions with calendar-month fixed effects, individual statistical significance tests with a Benjamini-Hochberg multiple-testing adjustment, and economic magnitude and trading-cost sensitivity analyses.
+
+All analyses are integrated into `run_all.py` and have been reproduced successfully in a fresh Google Colab notebook.
+
+Our next steps are to expand the analysis to the broader Open Asset Pricing anomaly universe, investigate differences across anomaly categories, and develop our final dashboard and research conclusions. Our current findings are preliminary and do not establish causation.
+
