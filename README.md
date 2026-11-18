@@ -66,7 +66,7 @@ The `period` column identifies the original research sample, pre-publication gap
 
 The `post_publication` indicator equals 0 for observations in the original sample or pre-publication gap, and 1 for observations after publication. It is missing for the publication year and observations before the original sample.
 
-For our main analysis, we plan to compare original-sample returns directly with post-publication returns. We will examine the pre-publication gap separately to help distinguish declines that began before publication from those occurring afterward. We will not treat all observations with `post_publication = 0` as if they belonged to the original research sample.
+Our analysis compares original-sample returns with post-publication returns and examines the pre-publication gap separately. We also implemented panel regressions with calendar-month fixed effects to help distinguish publication-related changes from broader calendar-time trends.
 
 ### Threats to Validity
 Our current results are preliminary, and several factors could affect how we interpret them:
@@ -74,7 +74,7 @@ Our current results are preliminary, and several factors could affect how we int
 - **Correlation vs. causation:** A decline in anomaly returns after publication does not necessarily mean publication caused the decline. Market conditions, changes in investor behavior, and other factors may also explain it.
 - **Data mining and original-sample bias:** Anomalies may look especially profitable in their original research samples because researchers identified them using those historical data. We examine the pre-publication gap separately to help investigate this possibility.
 - **Unequal sample periods:** Some anomalies have much longer post-publication histories than original research samples. We plan to test equal-length windows as a robustness check.
-- **Trading costs:** Our current comparisons do not adjust for additional transaction costs or other implementation difficulties. A strategy with positive returns may not be profitable after these costs.
+- **Trading costs:** We conduct a sensitivity analysis using hypothetical monthly trading costs of 0, 25, and 50 basis points. However, these assumptions do not reflect each anomaly's actual transaction costs or trading difficulty.
 - **Limited prototype sample:** We currently study only five anomalies. They were selected for our initial prototype, so we cannot assume our findings represent the entire universe of published anomalies.
 - **Portfolio construction and timing:** We rely on OpenAP's original-paper portfolios, which may use different construction methods across anomalies. We still need to verify the underlying signal timing and address possible look-ahead or selection biases.
 - **Publication timing:** Because we have publication years rather than exact publication dates, we exclude the entire publication year instead of trying to divide it into before and after publication.
