@@ -84,4 +84,15 @@ subprocess.run(
 
 assert (OUTPUTS / "prototype_regression_results.csv").exists()
 
+# Step 5: Run individual anomaly significance tests
+print("Step 5: Running anomaly significance tests...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "anomaly_tests.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "prototype_anomaly_tests.csv").exists()
+
 print("Pipeline completed successfully!")
