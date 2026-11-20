@@ -56,3 +56,25 @@ We implemented the statistical methods documented above using our five-anomaly p
 **Reproducibility:** We added `regression_analysis.py`, `anomaly_tests.py`, and `economic_analysis.py` to our pipeline. Their results are saved in `outputs/prototype_regression_results.csv`, `outputs/prototype_anomaly_tests.csv`, and `outputs/prototype_economic_results.csv`. We successfully reproduced the complete six-step pipeline in a fresh Google Colab environment.
 
 **Limitations:** These results cover only five prototype anomalies, not the full sample. The individual tests approximate the original and post-publication periods as independent when combining their Newey-West standard errors. Trading costs are hypothetical rather than measured, and the observed relationships do not establish causation. We will revisit the findings when we expand the analysis.
+
+### November 20, 2026 - Checkpoint 3 Full-Sample Selection
+We expanded our analysis beyond the five-anomaly prototype using the October 2026 Open Asset Pricing release (`202610`). We picked our eligibility criteria after examining data availability but before running the full-sample statistical analyses.
+
+**Initial universe:** OpenAP documentation contained 331 unique signals: 212 classified as Predictor, 114 as Placebo, and 5 as Drop. We chose the 212 Predictor signals for our primary analysis because our research focuses on published return predictors rather than placebo or excluded signals.
+
+**Data retrieval and validation:** We downloaded monthly long-short returns from the original-paper (`op`) portfolio collection. The initial dataset contained 175,529 anomaly-month observations across all 212 predictors. All returns matched their metadata, all research timelines were valid, and we found no missing or infinite returns or duplicate anomaly-month observations.
+
+**Period classification:** We classified observations as Original Sample, Pre-Publication Gap, Publication Year, Post-Publication, or Before Original Sample. Consistent with our previous methodology, we exclude the publication year and observations before the original sample from our main analyses.
+
+**Minimum sample requirement:** For our primary analysis, we require at least 24 monthly return observations in both the Original Sample and Post-Publication periods. We did this to try and avoid running statistical tests on extremely short return histories. We retain available pre-publication gap observations for the panel regressions.
+
+**Final eligible sample:** 209 anomalies met our 24-month requirement. We excluded:
+- Activism1: 135 original-sample observations and only 14 post-publication observations.
+- Activism2: 135 original-sample observations and only 14 post-publication observations.
+- PatentsRD: 318 original-sample observations and no post-publication observations.
+
+Our resulting analysis dataset contains 135,466 anomaly-month observations: 73,796 in the original research sample, 8,952 in the pre-publication gap, and 52,718 post-publication.
+
+**Sample-length sensitivity:** A 12-month minimum would include 211 anomalies, while a 36-month minimum would include the same 209 anomalies as our primary 24-month requirement.
+
+**Status:** We have completed the initial dataset construction and validation in Google Colab. Our next step is to make the full-sample pipeline reproducible and apply the statistical methods previously documented in this specification log. We have not yet run the full-sample significance tests or regressions.
