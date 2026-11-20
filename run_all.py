@@ -117,4 +117,15 @@ subprocess.run(
 
 assert (OUTPUTS / "full_sample_analysis.csv").exists()
 
+# Step 8: Generate full-sample descriptive results
+print("Step 8: Calculating full-sample summary statistics...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_summary.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_summary.csv").exists()
+
 print("Pipeline completed successfully!")
