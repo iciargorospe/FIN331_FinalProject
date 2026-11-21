@@ -9,6 +9,7 @@ Before continuing with the full analysis, we wanted feedback on a few method dec
 - Since the dataset provides publication years rather than exact dates, we were also planning on excluding publication-year observations from our main comparisons. Is that ok?
 - Finally, do you have any recommendations for measuring trading difficulty for our third research question?
 
+
 ---
 # Checkpoint 3 - STATUS
 **November 20, 2026**
