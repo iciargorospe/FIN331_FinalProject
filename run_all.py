@@ -139,4 +139,15 @@ subprocess.run(
 
 assert (OUTPUTS / "full_sample_tests.csv").exists()
 
+# Step 10: Run full-sample panel regressions
+print("Step 10: Running full-sample panel regressions...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_regression.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_regression.csv").exists()
+
 print("Pipeline completed successfully!")
