@@ -161,4 +161,15 @@ subprocess.run(
 
 assert (OUTPUTS / "full_sample_categories.csv").exists()
 
+# Step 12: Run equal-length sample robustness analysis
+print("Step 12: Running equal-length robustness tests...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_robustness.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_robustness.csv").exists()
+
 print("Pipeline completed successfully!")
