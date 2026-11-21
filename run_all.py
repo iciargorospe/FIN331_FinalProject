@@ -106,4 +106,70 @@ subprocess.run(
 
 assert (OUTPUTS / "prototype_economic_results.csv").exists()
 
+# Step 7: Build our full-sample analysis dataset
+print("Step 7: Building full-sample dataset...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "build_full_sample.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_analysis.csv").exists()
+
+# Step 8: Generate full-sample descriptive results
+print("Step 8: Calculating full-sample summary statistics...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_summary.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_summary.csv").exists()
+
+# Step 9: Run full-sample statistical significance tests
+print("Step 9: Running full-sample significance tests...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_tests.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_tests.csv").exists()
+
+# Step 10: Run full-sample panel regressions
+print("Step 10: Running full-sample panel regressions...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_regression.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_regression.csv").exists()
+
+# Step 11: Analyze differences across economic categories
+print("Step 11: Running full-sample category analysis...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_categories.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_categories.csv").exists()
+
+# Step 12: Run equal-length sample robustness analysis
+print("Step 12: Running equal-length robustness tests...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_robustness.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_robustness.csv").exists()
+
 print("Pipeline completed successfully!")
