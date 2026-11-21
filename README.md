@@ -1,131 +1,290 @@
+
 # FIN331 Final Project: Did Academic Research Kill the Anomalies?
 
-**Live Dashboard:** https://iciargorospe.github.io/FIN331_FinalProject/
+**Team 7 | Lehigh University | FIN331: Data and AI in Finance**
+
+**Checkpoint 3:** November 21, 2026  
+**Working branch:** `checkpoint3-v1`
+
+**Live Website:** https://iciargorospe.github.io/FIN331_FinalProject/
+
+**Note:** The live website currently displays our original five-anomaly proof of concept. The expanded 209-anomaly results are implemented in the `checkpoint3-v1` branch and have not yet been incorporated into the live dashboard.
+
+## Project Overview
+Our project investigates whether investment anomalies become less profitable after academic research about them is published.
+
+An investment anomaly is a pattern in stock returns that appears to offer a predictable investment opportunity. Once researchers publish an anomaly, more investors may learn about and trade the strategy, potentially reducing its profitability.
+
+We investigate three main research questions:
+
+1. Do investment anomalies become less profitable after publication?
+2. Which types of anomalies are more likely to remain profitable?
+3. Does trading difficulty help explain which anomalies continue to perform well?
+
+Our Checkpoint 3 analysis addresses the first two questions. Our third question remains under development because we have not yet incorporated direct measures of trading difficulty.
+
+## Data
+We use the October 2026 release (`202610`) of the Open Asset Pricing (OpenAP) dataset, developed by Andrew Chen and Tom Zimmermann.
+
+Data are accessed using the `openassetpricing` Python package (version 0.1.0).
+
+We download:
+- Signal documentation containing publication years, original sample periods, and economic categories.
+- Monthly long-short (`LS`) portfolio returns from the original-paper (`op`) portfolio collection.
+
+These returns are calculated by OpenAP using each anomaly's original-paper portfolio construction. We do not construct the underlying stock portfolios ourselves.
+
+Returns are expressed as percentages per month.
+
+### Full-Sample Selection
+The OpenAP documentation contains:
+- 331 unique signals.
+- 212 signals classified as `Predictor`.
+- 114 signals classified as `Placebo`.
+- 5 signals classified as `Drop`.
+
+We selected the 212 Predictor signals for our primary research sample.
+
+To ensure sufficient data for comparisons, we required at least 24 monthly return observations in both the original research sample and post-publication period.
+
+This left 209 eligible anomalies.
+
+The excluded anomalies were:
+- `Activism1`: 14 post-publication observations.
+- `Activism2`: 14 post-publication observations.
+- `PatentsRD`: no post-publication observations.
+
+### Final Analysis Dataset
+Our full-sample dataset contains 135,466 anomaly-month observations:
+
+| Period | Observations |
+|---|---:|
+| Original Sample | 73,796 |
+| Pre-Publication Gap | 8,952 |
+| Post-Publication | 52,718 |
+| **Total** | **135,466** |
+
+Each observation represents one anomaly in one calendar month.
+
+We exclude observations before the original research sample and during the publication year from our primary analyses.
+
+We exclude the publication year because our metadata identifies publication years rather than exact publication dates.
+
+## Methodology
+### 1. Descriptive Analysis
+For each anomaly, we calculate its arithmetic average monthly long-short return during:
+
+- The original research sample.
+- The pre-publication gap.
+- The post-publication period.
+
+We then compare original-sample returns with post-publication returns.
+
+Our overall descriptive statistics weight each anomaly equally, regardless of the number of monthly observations available.
+
+### 2. Individual Statistical Tests
+For each anomaly, we test whether its average monthly return differs between the original research sample and post-publication period.
+
+We use:
+- Two-sided tests.
+- Newey-West standard errors with 12 monthly lags.
+- An approximation treating the separated original and post-publication periods as independent when combining standard errors.
+- Benjamini-Hochberg adjustment across all 209 tests, using a 5% false discovery rate.
+
+### 3. Panel Regressions
+We estimate panel regressions of monthly anomaly returns on two indicators:
+
+- `post_sample`: equals 1 after the original research sample ends, including the pre-publication gap and post-publication period.
+- `post_publication`: equals 1 only during the post-publication period.
+
+The `post_sample` coefficient captures the change from the original research sample to the pre-publication gap.
+
+The `post_publication` coefficient captures the additional change from the gap to the post-publication period.
+
+The sum of these coefficients measures the overall original-to-post-publication difference.
+
+We include anomaly fixed effects in both models and calendar-month fixed effects in our preferred specification.
+
+Standard errors are clustered by calendar month.
+
+To handle the full dataset efficiently, we use sparse matrices to absorb fixed effects rather than constructing a large dense dummy-variable matrix.
+
+### 4. Economic Category Analysis
+We group anomalies into 35 economic categories and calculate category-level average returns, changes in profitability, and the proportion of anomalies experiencing declines.
+
+We distinguish categories with at least five anomalies from smaller categories when presenting comparisons.
+
+These comparisons are exploratory rather than formal tests of differences between economic categories.
+
+### 5. Equal-Length Robustness Check
+We also compare equally long original-sample and post-publication periods.
+
+For each anomaly, we select the last N available original-sample observations and the first N available post-publication observations, where N is the smaller of the two sample sizes.
+
+We repeat the individual anomaly tests and Benjamini-Hochberg adjustment on these observations.
+
+This tests the sensitivity of our original-to-post comparisons to the selected observation windows. It does not independently retest the additional post-publication regression coefficient.
+
+## Checkpoint 3 Results
+### Descriptive Results
+Average monthly returns, weighted equally across anomalies:
+
+| Period | Average Monthly Return |
+|---|---:|
+| Original Sample | 0.6911% |
+| Pre-Publication Gap | 0.4372% |
+| Post-Publication | 0.3095% |
+
+The average original-to-post-publication decline was 0.3816 percentage points per month.
+
+Overall, 181 of 209 anomalies (86.6%) experienced lower average returns after publication.
+
+### Statistical Significance
+Of 209 anomalies:
+- 54 had statistically significant changes before multiple-testing adjustment.
+- 30 had statistically significant changes after Benjamini-Hochberg adjustment.
+- All 30 BH-significant changes were declines.
+
+### Panel Regression Results
+All coefficients are measured in percentage points of monthly return.
+
+| Model | Coefficient | Estimate | p-value |
+|---|---|---:|---:|
+| Without Month FE | Post-sample | -0.2251 | 0.00155 |
+| Without Month FE | Additional post-publication | -0.1477 | 0.06034 |
+| Without Month FE | Total original-to-post | -0.3727 | <0.00001 |
+| With Month FE | Post-sample | -0.2171 | 0.00040 |
+| With Month FE | Additional post-publication | +0.0097 | 0.88370 |
+| With Month FE | Total original-to-post | -0.2073 | 0.01106 |
+
+Our preferred specification includes calendar-month fixed effects.
+
+Under this specification, the overall decline remains statistically significant, but we do not detect an additional statistically significant decline specifically after publication.
+
+This does not establish that publication has no effect. The analysis identifies associations rather than causal effects.
+
+### Economic Category Results
+We identified 35 economic categories, including 20 with at least five anomalies.
+
+Among categories with at least five anomalies, volatility, momentum, and liquidity showed some of the largest average declines.
+
+External financing and profitability showed comparatively smaller declines.
+
+We have not formally established that these differences between categories are statistically significant.
+
+### Equal-Length Robustness Results
+Using equally long original and post-publication observation windows:
+
+- 172 of 209 anomalies (82.3%) experienced declining returns.
+- 21 anomalies had BH-significant declines.
+- No anomalies had BH-significant increases.
+- The average monthly decline was 0.3740 percentage points.
+- 188 of 209 anomalies had the same direction of change as in the primary analysis.
+
+The overall descriptive pattern remains similar, although individual significance findings are sensitive to the observations selected.
 
 ## Reproducing Our Results
-To rebuild our dataset, website data, summary statistics, and statistical analyses from scratch:
+All Checkpoint 3 results can be reproduced using the `checkpoint3-v1` branch.
 
+### Step 1: Clone the Repository
+```bash
+git clone --branch checkpoint3-v1 --single-branch https://github.com/iciargorospe/FIN331_FinalProject.git
+cd FIN331_FinalProject
+```
+
+### Step 2: Install Dependencies
 ```bash
 pip install -r requirements.txt
+```
+
+### Step 3: Run the Complete Pipeline
+```bash
 python run_all.py
 ```
 
-This generates:
-- `outputs/checkpoint1_sample.csv`
-- `outputs/explorer_data.json`
-- `outputs/period_summary.csv`
-- `outputs/prototype_regression_results.csv`
-- `outputs/prototype_anomaly_tests.csv`
-- `outputs/prototype_economic_results.csv`
+The pipeline runs 12 steps: six preserving the original prototype and six building and analyzing the expanded sample.
 
-## Project Overview
-Our group is investigating whether investment anomalies become less profitable after their findings are published in academic research.
+The full-sample analysis generates:
 
-Our main research questions are:
-1. Do anomaly returns decline after publication?
-2. Which types of anomalies are most likely to remain profitable?
-3. Does the difficulty of trading an anomaly help explain its post-publication performance?
+| Output | Description |
+|---|---|
+| `outputs/full_sample_analysis.csv` | Final 209-anomaly dataset |
+| `outputs/full_sample_summary.csv` | Anomaly-level descriptive statistics |
+| `outputs/full_sample_tests.csv` | Individual tests and adjusted p-values |
+| `outputs/full_sample_regression.csv` | Panel regression estimates |
+| `outputs/full_sample_categories.csv` | Economic category comparisons |
+| `outputs/full_sample_robustness.csv` | Equal-length robustness results |
 
-## Data
-We use the October 2026 release (`202610`) of the Open Asset Pricing dataset, accessed through the `openassetpricing` Python package.
+The pipeline also regenerates the original prototype outputs.
 
-Our initial proof of concept includes five anomalies: Book-to-Market (BM), Initial Public Offerings (IndIPO), 12-Month Momentum (Mom12m), Accruals, and Asset Growth.
+The data are downloaded from OpenAP when the pipeline runs. The large full-sample dataset does not need to be manually downloaded or uploaded to GitHub.
 
-The dataset contains 4,454 anomaly-month observations, including monthly long-short returns, publication years, economic categories, and original research sample years. Returns are expressed as monthly percentages.
+### Reproducibility Validation
+On November 20, 2026, we cloned the `checkpoint3-v1` branch in a fresh Google Colab environment, installed the pinned dependencies, and successfully executed the entire 12-step pipeline.
 
-### Data Source and Construction
-Our data comes from Open Asset Pricing (OpenAP), developed by Andrew Chen and Tom Zimmermann. We use the October 2026 release (`202610`), accessed through the `openassetpricing` Python package (version 0.1.0).
+All six full-sample output files were generated, with the expected observation counts and findings.
 
-Our notebook downloads two datasets:
-- **Signal documentation:** Information about each anomaly, including its publication year, original research sample period, and category.
-- **Portfolio returns:** Monthly returns from the `op` (original-paper) portfolio collection. We select the `LS` (long-short) portfolio for each anomaly.
+We separately validated our full-sample significance-testing and sparse fixed-effects regression implementations against the original five-anomaly results.
 
-These are portfolio returns already constructed by OpenAP. We are not calculating individual stock returns or building portfolios from scratch. Because we use the original-paper portfolio collection, the construction methods may differ across anomalies.
+## Original Five-Anomaly Prototype
+Our original proof of concept used five anomalies:
+- Book-to-Market (`BM`)
+- Industry IPO Activity (`IndIPO`)
+- 12-Month Momentum (`Mom12m`)
+- Accruals
+- Asset Growth (`AssetGrowth`)
 
-Each observation in our dataset represents one anomaly in one month. Returns are measured in percentages per month. We use these returns to compare average profitability across the original research sample, pre-publication gap, and post-publication periods.
+This prototype contained 4,454 anomaly-month observations, of which 3,524 were included in the three main comparison periods.
 
-**Data retrieval:** The pipeline successfully downloaded and processed the October 2026 release on November 12, 2026. Rerunning `run_all.py` downloads the selected release again.
+The prototype code and website remain in the repository to preserve our earlier work.
 
-**Sources:**
-- OpenAP website: https://www.openassetpricing.com/
+The website is built with HTML, CSS, and JavaScript and reads `outputs/explorer_data.json`.
+
+To run it locally, first generate the prototype website data with `python run_all.py`, then start a local server:
+
+```bash
+python -m http.server 8000
+```
+
+Open `http://localhost:8000` in a browser.
+
+The live website has not yet been updated to display the full 209-anomaly analysis.
+
+## Limitations
+Our findings do not establish that academic publication caused changes in anomaly returns.
+
+Important limitations include:
+
+- Original-sample selection bias: published anomalies may look especially profitable in the historical samples used to discover them.
+- Publication timing: we know publication years, not exact publication dates.
+- Calendar-time conditions: market-wide changes may influence anomaly profitability.
+- Portfolio construction differences: the OpenAP original-paper portfolios may use different construction methods across anomalies.
+- Sample selection: our primary analysis includes only eligible Predictor signals.
+- Multiple testing: our significance results depend on testing assumptions and the dependence among anomalies.
+- Statistical approximation: our individual difference tests approximate the two separated periods as independent.
+- Unequal sample lengths: we address this descriptively with an equal-length-window robustness check.
+- Trading costs: we have not yet incorporated measured anomaly-specific trading costs or trading-difficulty variables.
+- Different weighting: descriptive results weight anomalies equally, while panel regressions use anomaly-month observations and fixed effects.
+
+Our original five-anomaly prototype includes hypothetical trading-cost scenarios of 0, 25, and 50 basis points per month. These scenarios are not actual measured trading costs and have not yet been extended to the full sample.
+
+## Project Documentation
+- `STATUS.md`: Project progress and Checkpoint 3 findings.
+- `specs_tried.md`: Statistical specifications, decisions, results, and limitations.
+- `PROPOSAL.md`: Original research proposal.
+- `audits/`: Instructor audit materials and responses.
+
+## Remaining Work
+Before the final project submission, we plan to:
+1. Prepare full-sample results for the interactive website.
+2. Expand the hypothetical trading-cost sensitivity analysis.
+3. Investigate available measures of actual trading difficulty.
+4. Conduct additional robustness checks on the publication regression.
+5. Finalize the website, research interpretation, and presentation.
+
+## Data Sources
+- Open Asset Pricing: https://www.openassetpricing.com/
 - OpenAP source code: https://github.com/OpenSourceAP/CrossSection
 - Python package: https://pypi.org/project/openassetpricing/
 
-## Methodology
-Following feedback on Checkpoint 1 and the approach discussed by McLean and Pontiff, we distinguish three comparison periods:
-- **Original Sample:** Years included in the original academic study.
-- **Pre-Publication Gap:** Years between the end of the original sample and publication.
-- **Post-Publication:** Years after the paper was published.
-
-We exclude publication-year observations and observations before the original research sample from our primary comparisons.
-
-### Period Classification and Comparison
-Our dataset includes two related variables: `period` and `post_publication`.
-
-The `period` column identifies the original research sample, pre-publication gap, publication year, post-publication period, and observations before the original sample. We use this more detailed classification for our current results and website.
-
-The `post_publication` indicator equals 0 for observations in the original sample or pre-publication gap, and 1 for observations after publication. It is missing for the publication year and observations before the original sample.
-
-Our analysis compares original-sample returns with post-publication returns and examines the pre-publication gap separately. We also implemented panel regressions with calendar-month fixed effects to help distinguish publication-related changes from broader calendar-time trends.
-
-### Threats to Validity
-Our current results are preliminary, and several factors could affect how we interpret them:
-
-- **Correlation vs. causation:** A decline in anomaly returns after publication does not necessarily mean publication caused the decline. Market conditions, changes in investor behavior, and other factors may also explain it.
-- **Data mining and original-sample bias:** Anomalies may look especially profitable in their original research samples because researchers identified them using those historical data. We examine the pre-publication gap separately to help investigate this possibility.
-- **Unequal sample periods:** Some anomalies have much longer post-publication histories than original research samples. We plan to test equal-length windows as a robustness check.
-- **Trading costs:** We conduct a sensitivity analysis using hypothetical monthly trading costs of 0, 25, and 50 basis points. However, these assumptions do not reflect each anomaly's actual transaction costs or trading difficulty.
-- **Limited prototype sample:** We currently study only five anomalies. They were selected for our initial prototype, so we cannot assume our findings represent the entire universe of published anomalies.
-- **Portfolio construction and timing:** We rely on OpenAP's original-paper portfolios, which may use different construction methods across anomalies. We still need to verify the underlying signal timing and address possible look-ahead or selection biases.
-- **Publication timing:** Because we have publication years rather than exact publication dates, we exclude the entire publication year instead of trying to divide it into before and after publication.
-
-We will address these limitations where possible as we expand the analysis. For now, our findings are descriptive rather than causal.
-
-### Data Validation and Verification
-We have implemented several checks to help ensure our results are accurate and reproducible:
-
-1. **Merges:** Our notebook uses `validate='m:1'` when combining returns with anomaly metadata and confirms that every return matches a metadata record.
-2. **Unique observations:** We check that each anomaly-month appears only once.
-3. **Metadata:** We verify that publication years are available and that each anomaly has consistent metadata across observations.
-4. **Date consistency:** We check that original research sample years follow a logical order and end before publication.
-5. **Return values:** We check for invalid or non-finite returns before generating the website data.
-6. **Period classifications:** We tested seven boundary months for the Momentum anomaly to confirm that observations are correctly assigned to the original sample, pre-publication gap, publication year, and post-publication period.
-7. **Summary statistics:** We checked the observation counts and average monthly returns against the underlying dataset and confirmed that the website results agree with our calculations.
-8. **Reproducibility:** We successfully ran `run_all.py` in a fresh Google Colab environment and regenerated the dataset, website JSON, and summary table.
-
-Our current dataset contains 4,454 anomaly-month observations. Of these, 3,524 are included in the three comparison periods used by the website. The remaining observations fall in excluded periods.
-
-These checks support the reliability of our current prototype, but they do not replace the additional statistical and methodological tests planned for the final analysis.
-
-## Running the Proof of Concept
-1. Open `01_seed4_poc.ipynb` in Google Colab or a Jupyter notebook environment.
-2. Install the dependencies using pip install -r requirements.txt before running the notebook, then run its cells in order.
-3. The notebook downloads the data, constructs the dataset, and performs validation checks.
-4. The resulting CSV is saved to `outputs/checkpoint1_sample.csv`.
-
-The notebook uses `openassetpricing` version `0.1.0` and data release `202610`.
-
-## Website Prototype
-Our interactive website currently uses the five proof-of-concept anomalies to display descriptions, publication years, historical return charts, and summary statistics across the three comparison periods.
-
-The website uses HTML, CSS, JavaScript, and a JSON data file generated by `prepare_data.py`. It does not require Streamlit.
-
-### Running the Website Locally
-1. From the repository folder, run `python3 prepare_data.py` to generate `outputs/explorer_data.json` from `outputs/checkpoint1_sample.csv`.
-2. Start a local server with `python3 -m http.server 8000`.
-3. Open `http://localhost:8000` in your browser. Stop the server with Ctrl+C.
-
-The Python script checks for duplicate observations and consistent metadata, calculates summary statistics, and prepares annual chart averages.
-
-The website displays arithmetic average monthly returns. The chart's annual points are averages of monthly observations, not compounded annual returns.
-
-### Limitations
-This website is currently a descriptive prototype using five anomalies, not our final analysis. Differences in returns before and after publication do not establish that publication caused those changes.
-
-## Current Status
-We have completed our five-anomaly prototype, including the original dataset, interactive website, panel regressions with calendar-month fixed effects, individual statistical significance tests with a Benjamini-Hochberg multiple-testing adjustment, and economic magnitude and trading-cost sensitivity analyses.
-
-All analyses are integrated into `run_all.py` and have been reproduced successfully in a fresh Google Colab notebook.
-
-Our next steps are to expand the analysis to the broader Open Asset Pricing anomaly universe, investigate differences across anomaly categories, and develop our final dashboard and research conclusions. Our current findings are preliminary and do not establish causation.
-
+Our research is a course project and should not be interpreted as investment advice.
