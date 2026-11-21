@@ -150,4 +150,15 @@ subprocess.run(
 
 assert (OUTPUTS / "full_sample_regression.csv").exists()
 
+# Step 11: Analyze differences across economic categories
+print("Step 11: Running full-sample category analysis...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_categories.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_categories.csv").exists()
+
 print("Pipeline completed successfully!")
