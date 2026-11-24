@@ -56,3 +56,120 @@ We implemented the statistical methods documented above using our five-anomaly p
 **Reproducibility:** We added `regression_analysis.py`, `anomaly_tests.py`, and `economic_analysis.py` to our pipeline. Their results are saved in `outputs/prototype_regression_results.csv`, `outputs/prototype_anomaly_tests.csv`, and `outputs/prototype_economic_results.csv`. We successfully reproduced the complete six-step pipeline in a fresh Google Colab environment.
 
 **Limitations:** These results cover only five prototype anomalies, not the full sample. The individual tests approximate the original and post-publication periods as independent when combining their Newey-West standard errors. Trading costs are hypothetical rather than measured, and the observed relationships do not establish causation. We will revisit the findings when we expand the analysis.
+
+### November 20, 2026 - Checkpoint 3 Full-Sample Selection
+We expanded our analysis beyond the five-anomaly prototype using the October 2026 Open Asset Pricing release (`202610`). We picked our eligibility criteria after examining data availability but before running the full-sample statistical analyses.
+
+**Initial universe:** OpenAP documentation contained 331 unique signals: 212 classified as Predictor, 114 as Placebo, and 5 as Drop. We chose the 212 Predictor signals for our primary analysis because our research focuses on published return predictors rather than placebo or excluded signals.
+
+**Data retrieval and validation:** We downloaded monthly long-short returns from the original-paper (`op`) portfolio collection. The initial dataset contained 175,529 anomaly-month observations across all 212 predictors. All returns matched their metadata, all research timelines were valid, and we found no missing or infinite returns or duplicate anomaly-month observations.
+
+**Period classification:** We classified observations as Original Sample, Pre-Publication Gap, Publication Year, Post-Publication, or Before Original Sample. Consistent with our previous methodology, we exclude the publication year and observations before the original sample from our main analyses.
+
+**Minimum sample requirement:** For our primary analysis, we require at least 24 monthly return observations in both the Original Sample and Post-Publication periods. We did this to try and avoid running statistical tests on extremely short return histories. We retain available pre-publication gap observations for the panel regressions.
+
+**Final eligible sample:** 209 anomalies met our 24-month requirement. We excluded:
+- Activism1: 135 original-sample observations and only 14 post-publication observations.
+- Activism2: 135 original-sample observations and only 14 post-publication observations.
+- PatentsRD: 318 original-sample observations and no post-publication observations.
+
+Our resulting analysis dataset contains 135,466 anomaly-month observations: 73,796 in the original research sample, 8,952 in the pre-publication gap, and 52,718 post-publication.
+
+**Sample-length sensitivity:** A 12-month minimum would include 211 anomalies, while a 36-month minimum would include the same 209 anomalies as our primary 24-month requirement.
+
+**Status at the time of sample selection:** We completed dataset construction and chose the eligibility rules before running the full-sample statistical analyses. The subsequent results are documented in the entry below.
+
+### November 20, 2026 - Checkpoint 3 Full-Sample Analysis and Validation
+We implemented our previously documented statistical methods on the 209 eligible anomalies. Our analysis uses 135,466 observations from the October 2026 Open Asset Pricing release.
+
+**Descriptive analysis:**
+We calculated each anomaly's average monthly return in the Original Sample, Pre-Publication Gap, and Post-Publication periods, then averaged these values equally across anomalies.
+
+Average monthly returns were:
+- Original Sample: 0.6911%
+- Pre-Publication Gap: 0.4372%
+- Post-Publication: 0.3095%
+
+The average original-to-post change was -0.3816 percentage points per month. Overall, 181 of 209 anomalies (86.6%) experienced declining returns.
+
+**Individual anomaly tests (A3):**
+We followed our prespecified approach: two-sided original-to-post-publication tests using Newey-West standard errors with 12-month lags. We approximated the separated periods as independent when combining their standard errors.
+
+Before multiple-testing adjustment, 54 of 209 changes were significant at the 5% level.
+
+After applying Benjamini-Hochberg across all 209 tests at a 5% false discovery rate, 30 changes remained significant. All 30 were declines.
+
+The individual statistics for all five prototype anomalies matched our earlier analysis. Adjusted p-values can differ because the number of tested hypotheses increased from five to 209.
+
+**Panel regressions (A2):**
+We estimated monthly returns using post-sample and post-publication indicators with anomaly fixed effects and calendar-month clustered standard errors.
+
+Without calendar-month fixed effects:
+- Post-sample: -0.2251 percentage points (p = 0.00155)
+- Additional post-publication: -0.1477 percentage points (p = 0.06034)
+- Combined original-to-post change: -0.3727 percentage points (p < 0.00001)
+
+With calendar-month fixed effects:
+- Post-sample: -0.2171 percentage points (p = 0.00040)
+- Additional post-publication: +0.0097 percentage points (p = 0.88370)
+- Combined original-to-post change: -0.2073 percentage points (p = 0.01106)
+
+The post-sample coefficient measures the difference between the original research sample and pre-publication gap. The additional post-publication coefficient measures the change from the gap to the post-publication period. Their sum measures the original-to-post difference.
+
+We retain the calendar-month fixed-effects specification as our preferred model because it accounts for common calendar-time conditions. It does not detect a statistically significant additional post-publication decline.
+
+**Computational method and validation:**
+Because the full sample is substantially larger than the prototype, we implemented a memory-efficient sparse fixed-effects regression instead of generating a large dense dummy-variable matrix.
+
+We validated this implementation against the original five-anomaly regression. All six coefficients, standard errors, and p-values matched the conventional implementation.
+
+**Economic category analysis:**
+We grouped the 209 anomalies into 35 economic categories, of which 20 contain at least five anomalies.
+
+Among categories with at least five anomalies, volatility (-0.754 percentage points), momentum (-0.673), and liquidity (-0.601) had some of the largest average monthly return declines. External financing (-0.054) and profitability (-0.124) had comparatively smaller declines.
+
+These category rankings are exploratory. We have not formally tested whether differences between categories are statistically significant.
+
+**Equal-length robustness specification:**
+We repeated the individual anomaly tests using an equal number of monthly observations in the original and post-publication periods for each anomaly.
+
+For each anomaly, we selected the last N available original-sample observations and the first N available post-publication observations, where N is the smaller of the two period lengths.
+
+This produced:
+- 172 of 209 anomalies with declining returns
+- 21 BH-significant declines
+- 0 BH-significant increases
+- Average return change of -0.3740 percentage points
+- 188 of 209 anomalies with the same direction of change as in the primary analysis
+- 15 anomalies significant under both specifications
+
+The broad descriptive decline remains similar, although the set of individually significant anomalies is sensitive to sample selection.
+
+This robustness check concerns the original-to-post comparison; it does not independently test the additional post-publication regression coefficient.
+
+**Reproducibility:**
+We integrated the full-sample analyses into `run_all.py`, creating a 12-step pipeline.
+
+On November 20, 2026, we cloned the `checkpoint3-v1` branch into a fresh Google Colab environment, installed the pinned dependencies, and successfully ran the complete pipeline.
+
+All six full-sample output files were generated and verified:
+- `outputs/full_sample_analysis.csv`
+- `outputs/full_sample_summary.csv`
+- `outputs/full_sample_tests.csv`
+- `outputs/full_sample_regression.csv`
+- `outputs/full_sample_categories.csv`
+- `outputs/full_sample_robustness.csv`
+
+**Interpretation and limitations:**
+The results consistently show lower anomaly profitability after the original research sample. However, our preferred panel regression does not find evidence of an additional statistically significant decline following publication.
+
+These findings are associational, not causal. Important limitations include original-sample selection bias, differing portfolio construction methods, publication timing measured only by year, and possible changes in market conditions.
+
+Our Newey-West difference tests also approximate original and post-period estimation errors as independent. The Benjamini-Hochberg procedure relies on assumptions about the dependence among tests.
+
+Our descriptive results weight anomalies equally, while the panel regressions use anomaly-month observations and fixed effects. Therefore, their estimates need not be identical.
+
+**Remaining specifications:**
+We have not yet expanded hypothetical trading-cost sensitivity to the complete 209-anomaly sample or implemented an actual trading-difficulty measure. Additional sensitivity analysis of the publication regression remains planned.
+
+We will report these remaining limitations rather than treating unfinished analyses as completed findings.
