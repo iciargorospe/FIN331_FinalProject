@@ -10,7 +10,7 @@ import tempfile
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent
-OUTPUT_DIR = ROOT / "outputs"
+OUTPUT_DIR = Path("outputs")
 
 # Load the original full-sample dataset
 source = OUTPUT_DIR / "full_sample_analysis.csv"
