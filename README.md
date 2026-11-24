@@ -2,8 +2,8 @@
 
 **Team 7 | Lehigh University | FIN331: Data and AI in Finance**
 
-**Checkpoint 3:** November 21, 2026  
-**Current analysis branch:** `main`
+**Checkpoint 3:** Completed and merged into `main`
+**Checkpoint 4:** Final research development on `checkpoint4-v1`
 
 **Live Website:** https://iciargorospe.github.io/FIN331_FinalProject/
 
@@ -182,12 +182,53 @@ Using equally long original and post-publication observation windows:
 
 The overall descriptive pattern remains similar, although individual significance findings are sensitive to the observations selected.
 
+## Checkpoint 4 Research Extensions
+### Full-Sample Trading-Cost Sensitivity
+We extended our hypothetical trading-cost analysis to all 209 anomalies.
+
+| Assumed monthly cost | Average post-publication net return | Anomalies with positive average net returns |
+|---|---:|---:|
+| 0 bps | +0.3095% | 174 / 209 |
+| 25 bps | +0.0595% | 101 / 209 |
+| 50 bps | -0.1905% | 46 / 209 |
+
+These scenarios subtract assumed monthly costs from gross returns. They are not estimates of actual transaction costs, and positive average net returns do not necessarily imply statistically significant profitability.
+
+Analysis: `full_sample_economic.py`
+Output: `outputs/full_sample_economic.csv`
+
+### Winsorized Regression Robustness
+We capped monthly returns at the pooled 1st and 99th percentiles and reran our panel regressions.
+
+In our preferred model with anomaly and calendar-month fixed effects:
+| Coefficient | Original estimate | Winsorized estimate | Winsorized p-value |
+|---|---:|---:|---:|
+| Post-sample | -0.2171 | -0.1780 | 0.00023 |
+| Additional post-publication | +0.0097 | +0.0250 | 0.65048 |
+| Total original-to-post | -0.2073 | -0.1530 | 0.02126 |
+
+Coefficients are percentage points of monthly return.
+
+The overall decline remains statistically significant, while the additional post-publication effect remains statistically insignificant. Extreme returns affect the magnitude of our estimates, and some findings in the model without calendar-month fixed effects are sensitive to winsorization.
+
+Analysis: `full_sample_winsorized_regression.py`
+Output: `outputs/full_sample_winsorized_regression.csv`
+
+### Trading-Difficulty Research Question
+We investigated the Tidy Finance Factor Library as a potential source of trading-difficulty measures.
+
+Although 177 of our 209 anomalies had matching names, selected candidate portfolios produced substantially different monthly returns from our OpenAP portfolios. We therefore did not combine their estimated trading costs with our returns.
+
+We have not directly tested whether harder-to-trade anomalies experience smaller profitability declines. Our hypothetical trading-cost scenarios address economic profitability, not the relationship between actual trading difficulty and anomaly persistence.
+
+The investigation and limitations are documented in `specs_tried.md`.
+
 ## Reproducing Our Results
-All Checkpoint 3 results can be reproduced using the main branch.
+The completed Checkpoint 3 analysis is available on main. The Checkpoint 4 extensions are currently on checkpoint4-v1.
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/iciargorospe/FIN331_FinalProject.git
+git clone --branch checkpoint4-v1 --single-branch https://github.com/iciargorospe/FIN331_FinalProject.git
 cd FIN331_FinalProject
 ```
 
@@ -201,7 +242,7 @@ pip install -r requirements.txt
 python run_all.py
 ```
 
-The pipeline runs 12 steps: six preserving the original prototype and six building and analyzing the expanded sample.
+The pipeline runs 14 steps: six preserving the original prototype and six building and analyzing the expanded sample.
 
 The full-sample analysis generates:
 
@@ -213,6 +254,8 @@ The full-sample analysis generates:
 | `outputs/full_sample_regression.csv` | Panel regression estimates |
 | `outputs/full_sample_categories.csv` | Economic category comparisons |
 | `outputs/full_sample_robustness.csv` | Equal-length robustness results |
+| `outputs/full_sample_economic.csv` | Full-sample hypothetical trading-cost sensitivity |
+| `outputs/full_sample_winsorized_regression.csv` | Winsorized panel-regression robustness |
 
 ### Offline Verification
 We also commit a compressed snapshot of our analysis dataset at `outputs/full_sample_analysis.csv.gz`, constructed from OpenAP release `202610`.
@@ -223,7 +266,7 @@ After installing the dependencies, run:
 python verify_offline.py
 ```
 
-This restores the dataset in a temporary directory, reruns the five downstream full-sample analyses, and compares their results with our committed output tables.
+This restores the dataset in a temporary directory, reruns the seven downstream full-sample analyses, and compares their results with our committed output tables.
 
 The script also independently recalculates Accruals' original-sample mean using a Python loop.
 
@@ -277,7 +320,7 @@ Important limitations include:
 - Multiple testing: our significance results depend on testing assumptions and the dependence among anomalies.
 - Statistical approximation: our individual difference tests approximate the two separated periods as independent.
 - Unequal sample lengths: we address this descriptively with an equal-length-window robustness check.
-- Trading costs: we have not yet incorporated measured anomaly-specific trading costs or trading-difficulty variables.
+- Our hypothetical trading-cost scenarios now cover all 209 anomalies. However, they are assumed monthly deductions, not measured transaction costs. We have not incorporated actual anomaly-specific trading costs or directly tested the effect of trading difficulty on profitability persistence.
 - Different weighting: descriptive results weight anomalies equally, while panel regressions use anomaly-month observations and fixed effects.
 
 Our original five-anomaly prototype includes hypothetical trading-cost scenarios of 0, 25, and 50 basis points per month. These scenarios are not actual measured trading costs and have not yet been extended to the full sample.
@@ -290,11 +333,10 @@ Our original five-anomaly prototype includes hypothetical trading-cost scenarios
 
 ## Remaining Work
 Before the final project submission, we plan to:
-1. Prepare full-sample results for the interactive website.
-2. Expand the hypothetical trading-cost sensitivity analysis.
-3. Investigate available measures of actual trading difficulty.
-4. Conduct additional robustness checks on the publication regression.
-5. Finalize the website, research interpretation, and presentation.
+1. Integrate full-sample results into the live interactive website.
+2. Merge the finalized Checkpoint 4 research into `main`.
+3. Complete an independent final audit.
+4. Finalize and rehearse the presentation.
 
 ## Data Sources
 - Open Asset Pricing: https://www.openassetpricing.com/
