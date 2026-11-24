@@ -172,4 +172,15 @@ subprocess.run(
 
 assert (OUTPUTS / "full_sample_robustness.csv").exists()
 
+# Step 13: Analyze full-sample economic magnitude and trading-cost sensitivity
+print("Step 13: Running full-sample economic analysis...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_economic.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_economic.csv").exists()
+
 print("Pipeline completed successfully!")
