@@ -1,14 +1,13 @@
-
 # FIN331 Final Project: Did Academic Research Kill the Anomalies?
 
 **Team 7 | Lehigh University | FIN331: Data and AI in Finance**
 
 **Checkpoint 3:** November 21, 2026  
-**Working branch:** `checkpoint3-v1`
+**Current analysis branch:** `main`
 
 **Live Website:** https://iciargorospe.github.io/FIN331_FinalProject/
 
-**Note:** The live website currently displays our original five-anomaly proof of concept. The expanded 209-anomaly results are implemented in the `checkpoint3-v1` branch and have not yet been incorporated into the live dashboard.
+**Note:** The complete 209-anomaly analysis, results, and documentation are now on `main`. The live website currently displays our five-anomaly prototype and will be updated before the final presentation.
 
 ## Project Overview
 Our project investigates whether investment anomalies become less profitable after academic research about them is published.
@@ -187,10 +186,8 @@ The overall descriptive pattern remains similar, although individual significanc
 All Checkpoint 3 results can be reproduced using the `checkpoint3-v1` branch.
 
 ### Step 1: Clone the Repository
-```bash
-git clone --branch checkpoint3-v1 --single-branch https://github.com/iciargorospe/FIN331_FinalProject.git
+git clone https://github.com/iciargorospe/FIN331_FinalProject.git
 cd FIN331_FinalProject
-```
 
 ### Step 2: Install Dependencies
 ```bash
@@ -214,6 +211,21 @@ The full-sample analysis generates:
 | `outputs/full_sample_regression.csv` | Panel regression estimates |
 | `outputs/full_sample_categories.csv` | Economic category comparisons |
 | `outputs/full_sample_robustness.csv` | Equal-length robustness results |
+
+### Offline Verification
+We also commit a compressed snapshot of our analysis dataset at `outputs/full_sample_analysis.csv.gz`, constructed from OpenAP release `202610`.
+
+After installing the dependencies, run:
+
+```bash
+python verify_offline.py
+```
+
+This restores the dataset in a temporary directory, reruns the five downstream full-sample analyses, and compares their results with our committed output tables.
+
+The script also independently recalculates Accruals' original-sample mean using a Python loop.
+
+This verification does not require access to the Open Asset Pricing data host. The complete `run_all.py` pipeline still requires access to OpenAP to download its original inputs.
 
 The pipeline also regenerates the original prototype outputs.
 
