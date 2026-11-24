@@ -183,4 +183,15 @@ subprocess.run(
 
 assert (OUTPUTS / "full_sample_economic.csv").exists()
 
+# Step 14: Test regression sensitivity to extreme monthly returns
+print("Step 14: Running winsorized regression robustness check...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_winsorized_regression.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_winsorized_regression.csv").exists()
+
 print("Pipeline completed successfully!")
