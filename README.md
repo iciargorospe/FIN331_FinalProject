@@ -242,7 +242,7 @@ pip install -r requirements.txt
 python run_all.py
 ```
 
-The pipeline runs 14 steps: six preserving the original prototype and six building and analyzing the expanded sample.
+The pipeline runs 14 steps: six preserving the original prototype and eight building and analyzing the expanded sample.
 
 The full-sample analysis generates:
 
@@ -283,6 +283,12 @@ All six full-sample output files were generated, with the expected observation c
 
 We separately validated our full-sample significance-testing and sparse fixed-effects regression implementations against the original five-anomaly results.
 
+On November 23, 2026, we also validated the complete Checkpoint 4 pipeline using a fresh clone of `checkpoint4-v1`. All 14 steps ran successfully, including the full-sample economic analysis and winsorized regression robustness check.
+
+We separately ran `python verify_offline.py` using the committed compressed dataset. All seven downstream full-sample output tables matched their committed results, and an independent calculation confirmed Accruals' original-sample average monthly return of 0.686739% across 360 observations.
+
+These checks establish computational reproducibility of our reported analyses, not causal identification or independent validation of the source data.
+
 ## Original Five-Anomaly Prototype
 Our original proof of concept used five anomalies:
 - Book-to-Market (`BM`)
@@ -322,8 +328,6 @@ Important limitations include:
 - Unequal sample lengths: we address this descriptively with an equal-length-window robustness check.
 - Our hypothetical trading-cost scenarios now cover all 209 anomalies. However, they are assumed monthly deductions, not measured transaction costs. We have not incorporated actual anomaly-specific trading costs or directly tested the effect of trading difficulty on profitability persistence.
 - Different weighting: descriptive results weight anomalies equally, while panel regressions use anomaly-month observations and fixed effects.
-
-Our original five-anomaly prototype includes hypothetical trading-cost scenarios of 0, 25, and 50 basis points per month. These scenarios are not actual measured trading costs and have not yet been extended to the full sample.
 
 ## Project Documentation
 - `STATUS.md`: Project progress and Checkpoint 3 findings.
