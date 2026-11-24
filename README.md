@@ -183,11 +183,13 @@ Using equally long original and post-publication observation windows:
 The overall descriptive pattern remains similar, although individual significance findings are sensitive to the observations selected.
 
 ## Reproducing Our Results
-All Checkpoint 3 results can be reproduced using the `checkpoint3-v1` branch.
+All Checkpoint 3 results can be reproduced using the main branch.
 
 ### Step 1: Clone the Repository
+```bash
 git clone https://github.com/iciargorospe/FIN331_FinalProject.git
 cd FIN331_FinalProject
+```
 
 ### Step 2: Install Dependencies
 ```bash
@@ -229,7 +231,7 @@ This verification does not require access to the Open Asset Pricing data host. T
 
 The pipeline also regenerates the original prototype outputs.
 
-The data are downloaded from OpenAP when the pipeline runs. The large full-sample dataset does not need to be manually downloaded or uploaded to GitHub.
+When the complete pipeline runs, it downloads the original data from OpenAP and rebuilds outputs/full_sample_analysis.csv. For offline verification, we have also committed a compressed copy of the dataset, so users can reproduce our downstream statistical results without accessing OpenAP.
 
 ### Reproducibility Validation
 On November 20, 2026, we cloned the `checkpoint3-v1` branch in a fresh Google Colab environment, installed the pinned dependencies, and successfully executed the entire 12-step pipeline.
