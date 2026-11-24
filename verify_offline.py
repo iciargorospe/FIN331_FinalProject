@@ -23,6 +23,11 @@ scripts = [
     ("full_sample_regression.py", "full_sample_regression.csv"),
     ("full_sample_categories.py", "full_sample_categories.csv"),
     ("full_sample_robustness.py", "full_sample_robustness.csv"),
+    ("full_sample_economic.py", "full_sample_economic.csv"),
+    (
+        "full_sample_winsorized_regression.py",
+        "full_sample_winsorized_regression.csv"
+    ),
 ]
 
 # Use a temporary directory so the verification does not
