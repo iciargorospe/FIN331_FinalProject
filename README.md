@@ -214,6 +214,22 @@ The overall decline remains statistically significant, while the additional post
 Analysis: `full_sample_winsorized_regression.py`
 Output: `outputs/full_sample_winsorized_regression.csv`
 
+### Two-Way Clustering Robustness
+As an additional exploratory sensitivity check, we recalculated standard errors for our preferred regression using two-way clustering by anomaly and calendar month, instead of clustering only by calendar month.
+
+| Coefficient | Original p-value | Two-way clustered p-value |
+|---|---:|---:|
+| Post-sample | 0.00040 | 0.00133 |
+| Additional post-publication | 0.88370 | 0.89020 |
+| Total original-to-post | 0.01106 | 0.01078 |
+
+Regression coefficients were unchanged.
+
+The overall original-to-post decline remains statistically significant at the 5% level, while the additional post-publication effect remains statistically insignificant. This strengthens the robustness of our inference but does not establish a causal effect of publication.
+
+Analysis: `full_sample_two_way_clustering.py`
+Output: `outputs/full_sample_two_way_clustering.csv`
+
 ### Trading-Difficulty Research Question
 We investigated the Tidy Finance Factor Library as a potential source of trading-difficulty measures.
 
@@ -242,7 +258,7 @@ pip install -r requirements.txt
 python run_all.py
 ```
 
-The pipeline runs 14 steps: six preserving the original prototype and eight building and analyzing the expanded sample.
+The pipeline runs 15 steps: six preserving the original prototype and nine building and analyzing the expanded sample.
 
 The full-sample analysis generates:
 
@@ -256,6 +272,7 @@ The full-sample analysis generates:
 | `outputs/full_sample_robustness.csv` | Equal-length robustness results |
 | `outputs/full_sample_economic.csv` | Full-sample hypothetical trading-cost sensitivity |
 | `outputs/full_sample_winsorized_regression.csv` | Winsorized panel-regression robustness |
+| `outputs/full_sample_two_way_clustering.csv` | Two-way clustered regression sensitivity results |
 
 ### Offline Verification
 We also commit a compressed snapshot of our analysis dataset at `outputs/full_sample_analysis.csv.gz`, constructed from OpenAP release `202610`.
@@ -266,7 +283,7 @@ After installing the dependencies, run:
 python verify_offline.py
 ```
 
-This restores the dataset in a temporary directory, reruns the seven downstream full-sample analyses, and compares their results with our committed output tables.
+This restores the dataset in a temporary directory, reruns the eight downstream full-sample analyses, and compares their results with our committed output tables.
 
 The script also independently recalculates Accruals' original-sample mean using a Python loop.
 
@@ -286,6 +303,10 @@ We separately validated our full-sample significance-testing and sparse fixed-ef
 On November 23, 2026, we also validated the complete Checkpoint 4 pipeline using a fresh clone of `checkpoint4-v1`. All 14 steps ran successfully, including the full-sample economic analysis and winsorized regression robustness check.
 
 We separately ran `python verify_offline.py` using the committed compressed dataset. All seven downstream full-sample output tables matched their committed results, and an independent calculation confirmed Accruals' original-sample average monthly return of 0.686739% across 360 observations.
+
+On November 25, 2026, we validated the updated 15-step pipeline using another fresh Google Colab clone of `checkpoint4-v1`. All 15 steps completed successfully, including the new two-way clustering robustness analysis.
+
+We also expanded `verify_offline.py` to reproduce eight downstream full-sample output tables using the committed compressed dataset. All eight comparisons passed, and the independent Accruals hand calculation continued to match.
 
 These checks establish computational reproducibility of our reported analyses, not causal identification or independent validation of the source data.
 
