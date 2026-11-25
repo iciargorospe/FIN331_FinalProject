@@ -2,12 +2,12 @@
 
 **Team 7 | Lehigh University | FIN331: Data and AI in Finance**
 
-**Checkpoint 3:** November 21, 2026  
-**Current analysis branch:** `main`
+**Checkpoint 3:** Completed and merged into `main`
+**Checkpoint 4:** Final research development on `checkpoint4-v1`
 
 **Live Website:** https://iciargorospe.github.io/FIN331_FinalProject/
 
-**Note:** The complete 209-anomaly analysis, results, and documentation are now on `main`. The live website currently displays our five-anomaly prototype and will be updated before the final presentation.
+**Note:** The 209-anomaly Checkpoint 3 analysis is on `main`. Our additional Checkpoint 4 robustness analyses, economic sensitivity tests, and final validation improvements are currently on `checkpoint4-v1`. The live website still displays our five-anomaly prototype and is being updated separately.
 
 ## Project Overview
 Our project investigates whether investment anomalies become less profitable after academic research about them is published.
@@ -182,12 +182,69 @@ Using equally long original and post-publication observation windows:
 
 The overall descriptive pattern remains similar, although individual significance findings are sensitive to the observations selected.
 
+## Checkpoint 4 Research Extensions
+### Full-Sample Trading-Cost Sensitivity
+We extended our hypothetical trading-cost analysis to all 209 anomalies.
+
+| Assumed monthly cost | Average post-publication net return | Anomalies with positive average net returns |
+|---|---:|---:|
+| 0 bps | +0.3095% | 174 / 209 |
+| 25 bps | +0.0595% | 101 / 209 |
+| 50 bps | -0.1905% | 46 / 209 |
+
+These scenarios subtract assumed monthly costs from gross returns. They are not estimates of actual transaction costs, and positive average net returns do not necessarily imply statistically significant profitability.
+
+Analysis: `full_sample_economic.py`
+Output: `outputs/full_sample_economic.csv`
+
+### Winsorized Regression Robustness
+We capped monthly returns at the pooled 1st and 99th percentiles and reran our panel regressions.
+
+In our preferred model with anomaly and calendar-month fixed effects:
+| Coefficient | Original estimate | Winsorized estimate | Winsorized p-value |
+|---|---:|---:|---:|
+| Post-sample | -0.2171 | -0.1780 | 0.00023 |
+| Additional post-publication | +0.0097 | +0.0250 | 0.65048 |
+| Total original-to-post | -0.2073 | -0.1530 | 0.02126 |
+
+Coefficients are percentage points of monthly return.
+
+The overall decline remains statistically significant, while the additional post-publication effect remains statistically insignificant. Extreme returns affect the magnitude of our estimates, and some findings in the model without calendar-month fixed effects are sensitive to winsorization.
+
+Analysis: `full_sample_winsorized_regression.py`
+Output: `outputs/full_sample_winsorized_regression.csv`
+
+### Two-Way Clustering Robustness
+As an additional exploratory sensitivity check, we recalculated standard errors for our preferred regression using two-way clustering by anomaly and calendar month, instead of clustering only by calendar month.
+
+| Coefficient | Original p-value | Two-way clustered p-value |
+|---|---:|---:|
+| Post-sample | 0.00040 | 0.00133 |
+| Additional post-publication | 0.88370 | 0.89020 |
+| Total original-to-post | 0.01106 | 0.01078 |
+
+Regression coefficients were unchanged.
+
+The overall original-to-post decline remains statistically significant at the 5% level, while the additional post-publication effect remains statistically insignificant. This strengthens the robustness of our inference but does not establish a causal effect of publication.
+
+Analysis: `full_sample_two_way_clustering.py`
+Output: `outputs/full_sample_two_way_clustering.csv`
+
+### Trading-Difficulty Research Question
+We investigated the Tidy Finance Factor Library as a potential source of trading-difficulty measures.
+
+Although 177 of our 209 anomalies had matching names, selected candidate portfolios produced substantially different monthly returns from our OpenAP portfolios. We therefore did not combine their estimated trading costs with our returns.
+
+We have not directly tested whether harder-to-trade anomalies experience smaller profitability declines. Our hypothetical trading-cost scenarios address economic profitability, not the relationship between actual trading difficulty and anomaly persistence.
+
+The investigation and limitations are documented in `specs_tried.md`.
+
 ## Reproducing Our Results
-All Checkpoint 3 results can be reproduced using the main branch.
+The completed Checkpoint 3 analysis is available on main. The Checkpoint 4 extensions are currently on checkpoint4-v1.
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/iciargorospe/FIN331_FinalProject.git
+git clone --branch checkpoint4-v1 --single-branch https://github.com/iciargorospe/FIN331_FinalProject.git
 cd FIN331_FinalProject
 ```
 
@@ -201,7 +258,7 @@ pip install -r requirements.txt
 python run_all.py
 ```
 
-The pipeline runs 12 steps: six preserving the original prototype and six building and analyzing the expanded sample.
+The pipeline runs 15 steps: six preserving the original prototype and nine building and analyzing the expanded sample.
 
 The full-sample analysis generates:
 
@@ -213,6 +270,9 @@ The full-sample analysis generates:
 | `outputs/full_sample_regression.csv` | Panel regression estimates |
 | `outputs/full_sample_categories.csv` | Economic category comparisons |
 | `outputs/full_sample_robustness.csv` | Equal-length robustness results |
+| `outputs/full_sample_economic.csv` | Full-sample hypothetical trading-cost sensitivity |
+| `outputs/full_sample_winsorized_regression.csv` | Winsorized panel-regression robustness |
+| `outputs/full_sample_two_way_clustering.csv` | Two-way clustered regression sensitivity results |
 
 ### Offline Verification
 We also commit a compressed snapshot of our analysis dataset at `outputs/full_sample_analysis.csv.gz`, constructed from OpenAP release `202610`.
@@ -223,7 +283,7 @@ After installing the dependencies, run:
 python verify_offline.py
 ```
 
-This restores the dataset in a temporary directory, reruns the five downstream full-sample analyses, and compares their results with our committed output tables.
+This restores the dataset in a temporary directory, reruns the eight downstream full-sample analyses, and compares their results with our committed output tables.
 
 The script also independently recalculates Accruals' original-sample mean using a Python loop.
 
@@ -233,12 +293,46 @@ The pipeline also regenerates the original prototype outputs.
 
 When the complete pipeline runs, it downloads the original data from OpenAP and rebuilds outputs/full_sample_analysis.csv. For offline verification, we have also committed a compressed copy of the dataset, so users can reproduce our downstream statistical results without accessing OpenAP.
 
+### Independent Arithmetic Spot-Checks
+In addition to reproducing our existing results, we developed a separate audit script to independently check selected calculations throughout the research pipeline.
+
+To run these checks after installing dependencies:
+
+```bash
+python independent_hand_checks.py
+```
+
+The script verifies nine areas:
+1. Dataset keys, period classifications, and regression indicators.
+2. Original and post-publication average returns calculated directly from monthly observations.
+3. An independently calculated Newey-West lag-12 standard error and p-value for Accruals.
+4. Benjamini-Hochberg multiple-testing adjustments across 209 anomalies.
+5. Economic category averages and anomaly counts.
+6. Equal-length sample selection and average-return comparisons.
+7. Hypothetical trading-cost deductions and profitability counts.
+8. Winsorization thresholds and extreme-observation counts.
+9. Regression coefficient totals and reported p-value calculations, including two-way clustering.
+
+On November 25, 2026, all nine independent spot-checks passed.
+
+These checks supplement our eight offline reproducibility comparisons. They provide independent arithmetic validation of selected results, but do not constitute an independent audit of the OpenAP source data or a complete re-estimation of every regression and covariance matrix.
+
 ### Reproducibility Validation
 On November 20, 2026, we cloned the `checkpoint3-v1` branch in a fresh Google Colab environment, installed the pinned dependencies, and successfully executed the entire 12-step pipeline.
 
 All six full-sample output files were generated, with the expected observation counts and findings.
 
 We separately validated our full-sample significance-testing and sparse fixed-effects regression implementations against the original five-anomaly results.
+
+On November 23, 2026, we also validated the complete Checkpoint 4 pipeline using a fresh clone of `checkpoint4-v1`. All 14 steps ran successfully, including the full-sample economic analysis and winsorized regression robustness check.
+
+We separately ran `python verify_offline.py` using the committed compressed dataset. All seven downstream full-sample output tables matched their committed results, and an independent calculation confirmed Accruals' original-sample average monthly return of 0.686739% across 360 observations.
+
+On November 25, 2026, we validated the updated 15-step pipeline using another fresh Google Colab clone of `checkpoint4-v1`. All 15 steps completed successfully, including the new two-way clustering robustness analysis.
+
+We also expanded `verify_offline.py` to reproduce eight downstream full-sample output tables using the committed compressed dataset. All eight comparisons passed, and the independent Accruals hand calculation continued to match.
+
+These checks establish computational reproducibility of our reported analyses, not causal identification or independent validation of the source data.
 
 ## Original Five-Anomaly Prototype
 Our original proof of concept used five anomalies:
@@ -277,10 +371,8 @@ Important limitations include:
 - Multiple testing: our significance results depend on testing assumptions and the dependence among anomalies.
 - Statistical approximation: our individual difference tests approximate the two separated periods as independent.
 - Unequal sample lengths: we address this descriptively with an equal-length-window robustness check.
-- Trading costs: we have not yet incorporated measured anomaly-specific trading costs or trading-difficulty variables.
+- Our hypothetical trading-cost scenarios now cover all 209 anomalies. However, they are assumed monthly deductions, not measured transaction costs. We have not incorporated actual anomaly-specific trading costs or directly tested the effect of trading difficulty on profitability persistence.
 - Different weighting: descriptive results weight anomalies equally, while panel regressions use anomaly-month observations and fixed effects.
-
-Our original five-anomaly prototype includes hypothetical trading-cost scenarios of 0, 25, and 50 basis points per month. These scenarios are not actual measured trading costs and have not yet been extended to the full sample.
 
 ## Project Documentation
 - `STATUS.md`: Project progress and Checkpoint 3 findings.
@@ -290,11 +382,10 @@ Our original five-anomaly prototype includes hypothetical trading-cost scenarios
 
 ## Remaining Work
 Before the final project submission, we plan to:
-1. Prepare full-sample results for the interactive website.
-2. Expand the hypothetical trading-cost sensitivity analysis.
-3. Investigate available measures of actual trading difficulty.
-4. Conduct additional robustness checks on the publication regression.
-5. Finalize the website, research interpretation, and presentation.
+1. Integrate full-sample results into the live interactive website.
+2. Merge the finalized Checkpoint 4 research into `main`.
+3. Complete an independent final audit.
+4. Finalize and rehearse the presentation.
 
 ## Data Sources
 - Open Asset Pricing: https://www.openassetpricing.com/

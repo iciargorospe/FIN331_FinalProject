@@ -44,6 +44,8 @@ Before running our full-sample analysis, we picked the following methods based o
 ## Changes and Findings Log
 We will record future specification changes here, including their purpose, results, and whether we retain them in the final analysis. We will also document approaches that do not support our hypotheses rather than reporting only favorable findings.
 
+
+---
 ### November 17, 2026 - Instructor Audit A2-A3 Implementation
 We implemented the statistical methods documented above using our five-anomaly prototype before expanding to the full dataset.
 
@@ -57,6 +59,8 @@ We implemented the statistical methods documented above using our five-anomaly p
 
 **Limitations:** These results cover only five prototype anomalies, not the full sample. The individual tests approximate the original and post-publication periods as independent when combining their Newey-West standard errors. Trading costs are hypothetical rather than measured, and the observed relationships do not establish causation. We will revisit the findings when we expand the analysis.
 
+
+---
 ### November 20, 2026 - Checkpoint 3 Full-Sample Selection
 We expanded our analysis beyond the five-anomaly prototype using the October 2026 Open Asset Pricing release (`202610`). We picked our eligibility criteria after examining data availability but before running the full-sample statistical analyses.
 
@@ -79,6 +83,8 @@ Our resulting analysis dataset contains 135,466 anomaly-month observations: 73,7
 
 **Status at the time of sample selection:** We completed dataset construction and chose the eligibility rules before running the full-sample statistical analyses. The subsequent results are documented in the entry below.
 
+
+---
 ### November 20, 2026 - Checkpoint 3 Full-Sample Analysis and Validation
 We implemented our previously documented statistical methods on the 209 eligible anomalies. Our analysis uses 135,466 observations from the October 2026 Open Asset Pricing release.
 
@@ -173,3 +179,116 @@ Our descriptive results weight anomalies equally, while the panel regressions us
 We have not yet expanded hypothetical trading-cost sensitivity to the complete 209-anomaly sample or implemented an actual trading-difficulty measure. Additional sensitivity analysis of the publication regression remains planned.
 
 We will report these remaining limitations rather than treating unfinished analyses as completed findings.
+
+
+---
+### November 23, 2026 - Checkpoint 4 Research Extensions and Final Validation
+We extended our completed 209-anomaly research with two additional analyses: full-sample hypothetical trading-cost sensitivity and winsorized panel-regression robustness.
+
+These extensions were exploratory follow-up analyses conducted after our Checkpoint 3 results.
+
+**1. Research Question 3: Trading-difficulty data feasibility**
+We investigated using the Tidy Finance Factor Library to obtain trading-cost or trading-difficulty measures for our existing Open Asset Pricing anomalies.
+
+Of our 209 anomalies, 177 had directly matching signal names in the dataset's sorting-variable list.
+
+However, matching names did not establish that the underlying portfolios were equivalent. The available portfolio specification files also lacked the reference flags described in parts of the documentation.
+
+We compared monthly returns from selected Tidy Finance portfolio constructions with our existing OpenAP returns:
+- Book-to-Market: correlations of 0.5730 and 0.5928 across two candidate specifications.
+- Accruals: correlation of 0.3868.
+- Asset Growth: correlation of 0.1402.
+
+The mean absolute monthly return differences were approximately 2.41 to 3.56 percentage points across these comparisons.
+
+These comparisons only tested selected specifications; they do not establish that no compatible portfolios exist. Nevertheless, they raised substantial concerns about directly applying trading costs from those portfolios to our original-paper OpenAP returns. Differences in underlying data releases also remained unresolved.
+
+**Decision:** We did not merge the Tidy Finance trading-cost estimates into our primary dataset or claim to have directly measured trading difficulty. Research Question 3 remains unanswered directly.
+
+**2. Full-sample hypothetical trading-cost sensitivity**
+We expanded the prototype trading-cost analysis to all 209 eligible anomalies in `full_sample_economic.py`.
+
+We considered assumed monthly cost deductions of 0, 25, and 50 basis points from each anomaly's average post-publication gross return.
+
+Results:
+| Assumed monthly cost | Average net monthly return | Anomalies with positive average net returns |
+|---|---:|---:|
+| 0 bps | +0.3095% | 174 / 209 |
+| 25 bps | +0.0595% | 101 / 209 |
+| 50 bps | -0.1905% | 46 / 209 |
+
+These calculations illustrate how sensitive apparent economic profitability is to hypothetical trading costs.
+
+They do not measure actual transaction costs, incorporate anomaly-specific turnover, establish risk-adjusted profitability, or test whether trading difficulty explains the persistence of anomalies.
+
+Output: `outputs/full_sample_economic.csv`.
+
+**3. Winsorized regression robustness**
+We tested whether extreme monthly returns materially influenced our original panel-regression conclusions.
+
+We capped returns below the pooled 1st percentile (-10.8256%) and above the pooled 99th percentile (+12.6634%). This affected 1,355 observations in each tail, or 2,710 of 135,466 observations overall.
+
+We then reestimated both original panel specifications using the same regression methodology and calendar-month clustered standard errors.
+
+In our preferred model with anomaly and calendar-month fixed effects:
+| Coefficient | Original estimate | Winsorized estimate | Winsorized p-value |
+|---|---:|---:|---:|
+| Post-sample | -0.2171 | -0.1780 | 0.00023 |
+| Additional post-publication | +0.0097 | +0.0250 | 0.65048 |
+| Total original-to-post | -0.2073 | -0.1530 | 0.02126 |
+
+All coefficients are measured in percentage points of monthly returns.
+
+The preferred regression continues to show a statistically significant overall decline, without a statistically significant additional post-publication effect.
+
+The estimated magnitude of the total decline becomes smaller after winsorization.
+
+In the model without calendar-month fixed effects, the additional post-publication coefficient becomes statistically significant after winsorization (p = 0.02524), whereas it was not significant at the 5% level in the original specification (p = 0.06034).
+
+Therefore, our preferred model's qualitative conclusions are robust to this treatment of extreme values, although magnitudes and some alternative-specification significance results are sensitive.
+
+Output: `outputs/full_sample_winsorized_regression.csv`.
+
+**4. Final reproducibility validation**
+We expanded `run_all.py` from 12 to 14 steps, incorporating both Checkpoint 4 analyses.
+
+We cloned the `checkpoint4-v1` branch in a fresh Google Colab environment, installed the pinned requirements, and successfully ran all 14 steps.
+
+We also expanded `verify_offline.py` to reproduce seven downstream full-sample output tables using the committed compressed dataset, without downloading data from OpenAP.
+
+All seven output comparisons passed.
+
+An independent hand calculation for Accruals reproduced its original-sample average monthly return of 0.686739%, using 360 monthly observations.
+
+**Final interpretation:** Our descriptive and regression findings remain the primary results. The additional analyses strengthen the economic interpretation and sensitivity checks but do not establish a causal publication effect or directly measure trading difficulty.
+
+Remaining project tasks involve final documentation, website integration, independent review, and presentation preparation.
+---
+
+### November 25, 2026 - Two-Way Clustering Sensitivity
+Following a skeptical review of our regression inference, we tested whether our conclusions depend on clustering standard errors only by calendar month.
+
+Our preferred regression originally uses anomaly and calendar-month fixed effects with standard errors clustered by calendar month.
+
+As an additional, exploratory robustness check, we recalculated standard errors using two-way clustering by anomaly and calendar month. This accounts for dependence across anomalies within a month and within anomalies over time.
+
+The regression coefficients remained unchanged.
+
+| Coefficient | Original p-value | Two-way clustered p-value |
+|---|---:|---:|
+| Post-sample | 0.00040 | 0.00133 |
+| Additional post-publication | 0.88370 | 0.89020 |
+| Total original-to-post | 0.01106 | 0.01078 |
+
+The overall original-to-post decline remains statistically significant at the 5% level, while the additional post-publication effect remains statistically insignificant.
+
+**Decision:** Retain our original prespecified regression as the primary specification and report two-way clustering as a supplementary sensitivity check.
+This strengthens the robustness of our statistical interpretation but does not establish that academic publication caused the observed return changes.
+
+**Reproducibility:** We added `full_sample_two_way_clustering.py` as Step 15 of `run_all.py` and saved its results to `outputs/full_sample_two_way_clustering.csv`.
+
+We expanded `verify_offline.py` to check eight downstream full-sample analyses. All eight output comparisons passed in a fresh clone using our committed compressed dataset. The independent Accruals hand calculation also passed.
+
+A separate fresh-clone execution of the complete 15-step pipeline remains to be confirmed.
+
+

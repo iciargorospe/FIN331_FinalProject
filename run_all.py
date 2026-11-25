@@ -172,4 +172,37 @@ subprocess.run(
 
 assert (OUTPUTS / "full_sample_robustness.csv").exists()
 
+# Step 13: Analyze full-sample economic magnitude and trading-cost sensitivity
+print("Step 13: Running full-sample economic analysis...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_economic.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_economic.csv").exists()
+
+# Step 14: Test regression sensitivity to extreme monthly returns
+print("Step 14: Running winsorized regression robustness check...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_winsorized_regression.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_winsorized_regression.csv").exists()
+
+# Step 15: Test sensitivity to two-way clustered standard errors
+print("Step 15: Running two-way clustering robustness check...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_two_way_clustering.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_two_way_clustering.csv").exists()
+
 print("Pipeline completed successfully!")
