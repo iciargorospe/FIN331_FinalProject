@@ -263,4 +263,32 @@ An independent hand calculation for Accruals reproduced its original-sample aver
 **Final interpretation:** Our descriptive and regression findings remain the primary results. The additional analyses strengthen the economic interpretation and sensitivity checks but do not establish a causal publication effect or directly measure trading difficulty.
 
 Remaining project tasks involve final documentation, website integration, independent review, and presentation preparation.
+---
+
+### November 25, 2026 - Two-Way Clustering Sensitivity
+Following a skeptical review of our regression inference, we tested whether our conclusions depend on clustering standard errors only by calendar month.
+
+Our preferred regression originally uses anomaly and calendar-month fixed effects with standard errors clustered by calendar month.
+
+As an additional, exploratory robustness check, we recalculated standard errors using two-way clustering by anomaly and calendar month. This accounts for dependence across anomalies within a month and within anomalies over time.
+
+The regression coefficients remained unchanged.
+
+| Coefficient | Original p-value | Two-way clustered p-value |
+|---|---:|---:|
+| Post-sample | 0.00040 | 0.00133 |
+| Additional post-publication | 0.88370 | 0.89020 |
+| Total original-to-post | 0.01106 | 0.01078 |
+
+The overall original-to-post decline remains statistically significant at the 5% level, while the additional post-publication effect remains statistically insignificant.
+
+**Decision:** Retain our original prespecified regression as the primary specification and report two-way clustering as a supplementary sensitivity check.
+This strengthens the robustness of our statistical interpretation but does not establish that academic publication caused the observed return changes.
+
+**Reproducibility:** We added `full_sample_two_way_clustering.py` as Step 15 of `run_all.py` and saved its results to `outputs/full_sample_two_way_clustering.csv`.
+
+We expanded `verify_offline.py` to check eight downstream full-sample analyses. All eight output comparisons passed in a fresh clone using our committed compressed dataset. The independent Accruals hand calculation also passed.
+
+A separate fresh-clone execution of the complete 15-step pipeline remains to be confirmed.
+
 
