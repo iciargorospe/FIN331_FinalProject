@@ -148,3 +148,45 @@ Our remaining priorities are:
 2. Update the live website to display our full-sample findings.
 3. Complete an independent final audit.
 4. Prepare and rehearse our final presentation.
+
+
+---
+# Checkpoint 4 - Final Validation Update
+**November 25, 2026**
+
+## Additional Regression Robustness
+Following a skeptical review of our statistical methods, we tested two-way clustering of regression standard errors by anomaly and calendar month.
+
+Our original preferred regression clusters standard errors by calendar month only. Two-way clustering also accounts for correlation within each anomaly over time.
+
+| Coefficient | Original p-value | Two-way clustered p-value |
+|---|---:|---:|
+| Post-sample | 0.00040 | 0.00133 |
+| Additional post-publication | 0.88370 | 0.89020 |
+| Total original-to-post | 0.01106 | 0.01078 |
+
+Regression coefficients were unchanged.
+
+Our main conclusion remains robust: profitability declined significantly overall, but we do not find a statistically significant additional change specifically after publication. These results do not establish causation.
+
+## Final Reproducibility Validation
+We incorporated the two-way clustering analysis as Step 15 of `run_all.py`.
+
+On November 25, we successfully ran the complete 15-step pipeline from a fresh Google Colab clone of `checkpoint4-v1`.
+
+We also expanded `verify_offline.py` to reproduce eight downstream full-sample analyses using our committed compressed dataset.
+
+**All eight offline comparisons passed.**
+The independent Accruals hand calculation also reproduced its original-sample average monthly return of 0.686739% across 360 observations.
+
+Our final research dataset contains 209 eligible anomalies and 135,466 anomaly-month observations.
+
+## Remaining Work
+The planned research analyses and full-pipeline reproducibility validation are complete.
+
+Remaining tasks include:
+1. Additional independent hand-checks across the research pipeline.
+2. Final independent code and research audit.
+3. Integration of the 209-anomaly results into the live website.
+4. Final presentation preparation and repository merge.
+
