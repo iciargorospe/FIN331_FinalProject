@@ -7,7 +7,7 @@
 
 **Live Website:** https://iciargorospe.github.io/FIN331_FinalProject/
 
-**Note:** The complete 209-anomaly analysis, results, and documentation are now on `main`. The live website currently displays our five-anomaly prototype and will be updated before the final presentation.
+**Note:** The 209-anomaly Checkpoint 3 analysis is on `main`. Our additional Checkpoint 4 robustness analyses, economic sensitivity tests, and final validation improvements are currently on `checkpoint4-v1`. The live website still displays our five-anomaly prototype and is being updated separately.
 
 ## Project Overview
 Our project investigates whether investment anomalies become less profitable after academic research about them is published.
@@ -292,6 +292,30 @@ This verification does not require access to the Open Asset Pricing data host. T
 The pipeline also regenerates the original prototype outputs.
 
 When the complete pipeline runs, it downloads the original data from OpenAP and rebuilds outputs/full_sample_analysis.csv. For offline verification, we have also committed a compressed copy of the dataset, so users can reproduce our downstream statistical results without accessing OpenAP.
+
+### Independent Arithmetic Spot-Checks
+In addition to reproducing our existing results, we developed a separate audit script to independently check selected calculations throughout the research pipeline.
+
+To run these checks after installing dependencies:
+
+```bash
+python independent_hand_checks.py
+```
+
+The script verifies nine areas:
+1. Dataset keys, period classifications, and regression indicators.
+2. Original and post-publication average returns calculated directly from monthly observations.
+3. An independently calculated Newey-West lag-12 standard error and p-value for Accruals.
+4. Benjamini-Hochberg multiple-testing adjustments across 209 anomalies.
+5. Economic category averages and anomaly counts.
+6. Equal-length sample selection and average-return comparisons.
+7. Hypothetical trading-cost deductions and profitability counts.
+8. Winsorization thresholds and extreme-observation counts.
+9. Regression coefficient totals and reported p-value calculations, including two-way clustering.
+
+On November 25, 2026, all nine independent spot-checks passed.
+
+These checks supplement our eight offline reproducibility comparisons. They provide independent arithmetic validation of selected results, but do not constitute an independent audit of the OpenAP source data or a complete re-estimation of every regression and covariance matrix.
 
 ### Reproducibility Validation
 On November 20, 2026, we cloned the `checkpoint3-v1` branch in a fresh Google Colab environment, installed the pinned dependencies, and successfully executed the entire 12-step pipeline.
