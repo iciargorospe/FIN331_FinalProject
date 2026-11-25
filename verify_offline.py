@@ -28,6 +28,10 @@ scripts = [
         "full_sample_winsorized_regression.py",
         "full_sample_winsorized_regression.csv"
     ),
+    (
+        "full_sample_two_way_clustering.py",
+        "full_sample_two_way_clustering.csv"
+    ),
 ]
 
 # Use a temporary directory so the verification does not
