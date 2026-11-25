@@ -194,4 +194,15 @@ subprocess.run(
 
 assert (OUTPUTS / "full_sample_winsorized_regression.csv").exists()
 
+# Step 15: Test sensitivity to two-way clustered standard errors
+print("Step 15: Running two-way clustering robustness check...", flush=True)
+
+subprocess.run(
+    [sys.executable, str(ROOT / "full_sample_two_way_clustering.py")],
+    cwd=ROOT,
+    check=True
+)
+
+assert (OUTPUTS / "full_sample_two_way_clustering.csv").exists()
+
 print("Pipeline completed successfully!")
