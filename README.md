@@ -346,15 +346,16 @@ This prototype contained 4,454 anomaly-month observations, of which 3,524 were i
 
 The prototype code and website remain in the repository to preserve our earlier work.
 
-The website is built with HTML, CSS, and JavaScript and reads `outputs/explorer_data.json`.
+The full-sample website is built with HTML, CSS, and JavaScript and reads `outputs/website_data.json`.
 
-To run it locally, first generate the prototype website data with `python run_all.py`, then start a local server:
+To prepare and preview the website locally, generate its data from the saved result files:
 
 ```bash
-python -m http.server 8000
+python3 prepare_data.py
+python3 -m http.server 4173
 ```
 
-Open `http://localhost:8000` in a browser.
+Open `http://127.0.0.1:4173` in a browser. The preparation script writes `outputs/website_data.json` from saved CSV/GZIP outputs; it does not rerun or alter the underlying research methods.
 
 The live website has not yet been updated to display the full 209-anomaly analysis.
 

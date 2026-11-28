@@ -1,4 +1,4 @@
-const DATA_URL = "outputs/explorer_data.json";
+const DATA_URL = "outputs/website_data.json";
 const PERIOD_ORDER = ["original_sample", "gap", "post_publication"];
 const PERIOD_COLORS = {
   original_sample: "#167c79",
@@ -12,23 +12,35 @@ const content = document.querySelector("#explorer-content");
 
 fetch(DATA_URL)
   .then((response) => {
-    if (!response.ok) throw new Error("Could not load the saved explorer data.");
+    if (!response.ok) throw new Error("Could not load the saved website data.");
     return response.json();
   })
   .then((data) => {
     window.explorerData = data;
     document.querySelector("#data-release").textContent = data.data_release;
     document.querySelector("#data-release-footer").textContent = data.data_release;
-    data.anomalies.forEach((anomaly, index) => {
+    document.querySelectorAll(".dynamic-count").forEach((node) => {
+      node.textContent = data.eligible_anomalies.toLocaleString();
+    });
+    document.querySelectorAll("#eligible-count, #eligible-count-copy").forEach((node) => {
+      node.textContent = data.eligible_anomalies.toLocaleString();
+    });
+
+    data.anomalies.forEach((anomaly) => {
       const option = document.createElement("option");
       option.value = anomaly.signal;
       option.textContent = anomaly.label;
       select.append(option);
-      if (index === 0) select.value = anomaly.signal;
     });
+    select.value = data.anomalies[0].signal;
+
+    renderOverview(data);
+    renderTests(data);
+    renderRegressions(data);
+    renderCategories(data);
+    renderRobustness(data);
     status.textContent = "";
     content.hidden = false;
-    renderResults(data);
     renderSelected();
   })
   .catch((error) => {
@@ -36,6 +48,8 @@ fetch(DATA_URL)
   });
 
 select.addEventListener("change", renderSelected);
+document.querySelector("#test-filter").addEventListener("change", () => renderTests(window.explorerData));
+document.querySelector("#category-filter").addEventListener("change", () => renderCategories(window.explorerData));
 window.addEventListener("resize", () => {
   if (window.explorerData) renderChart(findSelected());
 });
@@ -48,13 +62,147 @@ function renderSelected() {
   if (!window.explorerData) return;
   const anomaly = findSelected();
   document.querySelector("#anomaly-title").textContent = anomaly.label;
-  document.querySelector("#anomaly-description").textContent = anomaly.description;
+  document.querySelector("#anomaly-description").textContent =
+    `${anomaly.economic_category} · ${anomaly.data_category} · published ${anomaly.publication_year}`;
   renderChart(anomaly);
   renderSummary(anomaly);
 }
 
-function formatNumber(value) {
+function formatPct(value) {
   return value == null ? "—" : `${value.toFixed(2)}%`;
+}
+
+function formatP(value) {
+  if (value == null) return "—";
+  if (value < 0.0001) return "<0.0001";
+  return value.toFixed(4);
+}
+
+function formatPP(value) {
+  if (value == null) return "—";
+  return `${value >= 0 ? "+" : ""}${value.toFixed(2)} pp`;
+}
+
+function appendRows(tableId, rows) {
+  const table = document.querySelector(tableId);
+  table.replaceChildren();
+  rows.forEach((values) => {
+    const row = document.createElement("tr");
+    values.forEach((value) => {
+      const cell = document.createElement("td");
+      if (value instanceof Node) cell.append(value);
+      else cell.textContent = value;
+      row.append(cell);
+    });
+    table.append(row);
+  });
+}
+
+function renderOverview(data) {
+  const desc = data.descriptive;
+  document.querySelector("#original-average").textContent = formatPct(desc.original_average_pct);
+  document.querySelector("#post-average").textContent = formatPct(desc.post_average_pct);
+  document.querySelector("#declined-count").textContent =
+    `${desc.declined_count.toLocaleString()} / ${data.eligible_anomalies.toLocaleString()}`;
+
+  appendRows("#period-results-table", [
+    ["Original research sample", formatPct(desc.original_average_pct), data.period_counts.original_sample.toLocaleString()],
+    ["Pre-publication gap", formatPct(desc.gap_average_pct), data.period_counts.gap.toLocaleString()],
+    ["Post-publication", formatPct(desc.post_average_pct), data.period_counts.post_publication.toLocaleString()],
+  ]);
+
+  document.querySelector("#raw-significant").textContent = data.individual_tests.raw_significant.toLocaleString();
+  document.querySelector("#bh-significant").textContent = data.individual_tests.bh_significant.toLocaleString();
+  document.querySelector("#bh-declines").textContent = data.individual_tests.bh_declines.toLocaleString();
+}
+
+function renderTests(data) {
+  const filter = document.querySelector("#test-filter").value;
+  const filtered = data.anomalies.filter((anomaly) => {
+    const test = anomaly.test;
+    if (filter === "bh_decline") return test.significant_decline;
+    if (filter === "bh_increase") return test.significant_increase;
+    if (filter === "unsignificant") return !test.significant_after_BH;
+    return true;
+  });
+  appendRows("#tests-table", filtered.map((anomaly) => {
+    const test = anomaly.test;
+    const result = test.significant_decline
+      ? "BH-significant decline"
+      : test.significant_increase
+        ? "BH-significant increase"
+        : "Not BH-significant";
+    const link = document.createElement("button");
+    link.type = "button";
+    link.className = "table-link";
+    link.textContent = anomaly.label;
+    link.addEventListener("click", () => {
+      select.value = anomaly.signal;
+      renderSelected();
+      document.querySelector("#explorer").scrollIntoView({ behavior: "smooth" });
+    });
+    return [
+      link,
+      formatPct(test.original_mean),
+      formatPct(test.post_mean),
+      formatPP(test.difference_pp),
+      formatP(test.p_value),
+      formatP(test.adjusted_p_value),
+      result,
+    ];
+  }));
+}
+
+function renderRegressions(data) {
+  const rows = data.regressions.map((item) => [
+    item.model,
+    `${formatPP(item.post_sample.coefficient)}\np = ${formatP(item.post_sample.p_value)}`,
+    `${formatPP(item.post_publication.coefficient)}\np = ${formatP(item.post_publication.p_value)}`,
+    `${formatPP(item.total.coefficient)}\np = ${formatP(item.total.p_value)}`,
+  ]);
+  appendRows("#regression-table", rows);
+}
+
+function renderCategories(data) {
+  const showAll = document.querySelector("#category-filter").value === "all";
+  document.querySelector("#category-count").textContent = data.categories.length.toLocaleString();
+  const rows = data.categories
+    .filter((category) => showAll || category.at_least_5_anomalies)
+    .map((category) => [
+      category.economic_category,
+      category.n_anomalies.toLocaleString(),
+      formatPct(category.original_mean_pct),
+      formatPct(category.post_mean_pct),
+      formatPP(category.mean_change_pp),
+      `${category.n_declined.toLocaleString()} (${category.pct_declined.toFixed(1)}%)`,
+      category.n_significant_declines.toLocaleString(),
+    ]);
+  appendRows("#categories-table", rows);
+}
+
+function renderRobustness(data) {
+  document.querySelector("#equal-declined").textContent = data.equal_length.declined_count.toLocaleString();
+  document.querySelector("#equal-bh").textContent = data.equal_length.bh_significant_declines.toLocaleString();
+  document.querySelector("#equal-average-change").textContent = formatPP(data.equal_length.average_change_pp);
+
+  appendRows("#costs-table", data.hypothetical_costs.map((cost) => [
+    `${cost.bps} bps / month`,
+    formatPct(cost.average_net_pct),
+    `${cost.positive_count.toLocaleString()} / ${data.eligible_anomalies.toLocaleString()}`,
+  ]));
+
+  appendRows("#wins-table", data.winsorized.map((row) => [
+    row.variable,
+    formatPP(row.coefficient_original),
+    formatPP(row.coefficient_winsorized),
+    formatP(row.p_value_winsorized),
+  ]));
+
+  appendRows("#cluster-table", data.two_way_clustering.map((row) => [
+    row.variable,
+    formatP(row.p_month_only),
+    formatP(row.p_two_way),
+  ]));
 }
 
 function renderSummary(anomaly) {
@@ -63,19 +211,21 @@ function renderSummary(anomaly) {
   PERIOD_ORDER.forEach((period) => {
     const result = anomaly.summary[period];
     const row = document.createElement("tr");
-    const dotClass = period === "gap" ? "gap-dot" : period === "post_publication" ? "post-dot" : "";
     const label = document.createElement("td");
     const periodCell = document.createElement("span");
     periodCell.className = "period-cell";
     const dot = document.createElement("i");
-    dot.className = `period-dot ${dotClass}`;
-    periodCell.append(dot, document.createTextNode(result.label));
+    dot.className = `period-dot ${period === "gap" ? "gap-dot" : period === "post_publication" ? "post-dot" : ""}`;
+    const labels = {
+      original_sample: "Original research sample",
+      gap: "Pre-publication gap",
+      post_publication: "Post-publication",
+    };
+    periodCell.append(dot, document.createTextNode(labels[period]));
     label.append(periodCell);
     row.append(label);
     [
-      formatNumber(result.mean_monthly_pct),
-      formatNumber(result.median_monthly_pct),
-      formatNumber(result.std_monthly_pct),
+      formatPct(result.mean_monthly_pct),
       result.observations.toLocaleString(),
     ].forEach((value) => {
       const cell = document.createElement("td");
@@ -84,8 +234,7 @@ function renderSummary(anomaly) {
     });
     table.append(row);
   });
-  document.querySelector("#range-note").textContent =
-    `Sample ${anomaly.sample_start_year}–${anomaly.sample_end_year} · Published ${anomaly.publication_year}`;
+  document.querySelector("#range-note").textContent = `Published ${anomaly.publication_year}`;
 }
 
 function svgElement(tag, attributes = {}, text = "") {
@@ -132,17 +281,19 @@ function renderChart(anomaly) {
   svg.append(svgElement("line", { x1: margin.left, x2: margin.left, y1: margin.top, y2: height - margin.bottom, class: "axis-line" }));
   svg.append(svgElement("line", { x1: margin.left, x2: width - margin.right, y1: height - margin.bottom, y2: height - margin.bottom, class: "axis-line" }));
 
-  const publicationX = x(anomaly.publication_year);
-  svg.append(svgElement("line", {
-    x1: publicationX, x2: publicationX, y1: margin.top, y2: height - margin.bottom,
-    class: "publication-line",
-  }));
-  svg.append(svgElement("text", {
-    x: publicationX + (publicationX > width - 150 ? -7 : 7),
-    y: margin.top + 13,
-    "text-anchor": publicationX > width - 150 ? "end" : "start",
-    class: "publication-label",
-  }, `Published ${anomaly.publication_year}`));
+  if (anomaly.publication_year >= firstYear && anomaly.publication_year <= lastYear) {
+    const publicationX = x(anomaly.publication_year);
+    svg.append(svgElement("line", {
+      x1: publicationX, x2: publicationX, y1: margin.top, y2: height - margin.bottom,
+      class: "publication-line",
+    }));
+    svg.append(svgElement("text", {
+      x: publicationX + (publicationX > width - 150 ? -7 : 7),
+      y: margin.top + 13,
+      "text-anchor": publicationX > width - 150 ? "end" : "start",
+      class: "publication-label",
+    }, `Published ${anomaly.publication_year}`));
+  }
 
   const tickCount = Math.min(6, Math.max(2, Math.floor(plotWidth / 115)));
   for (let tick = 0; tick <= tickCount; tick += 1) {
@@ -163,33 +314,5 @@ function renderChart(anomaly) {
       marker.append(svgElement("title", {}, `${point.year}: ${point.mean_monthly_pct.toFixed(2)}% mean monthly return (${point.observations} months)`));
       svg.append(marker);
     });
-  });
-}
-
-function renderResults(data) {
-  const table = document.querySelector("#results-table");
-  table.replaceChildren();
-
-  data.anomalies.forEach((anomaly) => {
-    const original = anomaly.summary.original_sample.mean_monthly_pct;
-    const post = anomaly.summary.post_publication.mean_monthly_pct;
-    const change = post - original;
-
-    const row = document.createElement("tr");
-
-    const values = [
-      anomaly.label,
-      formatNumber(original),
-      formatNumber(post),
-      `${change >= 0 ? "+" : ""}${change.toFixed(2)} pp`
-    ];
-
-    values.forEach((value) => {
-      const cell = document.createElement("td");
-      cell.textContent = value;
-      row.append(cell);
-    });
-
-    table.append(row);
   });
 }

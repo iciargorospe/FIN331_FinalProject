@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A five-anomaly prototype exploring long-short returns around academic publication.">
+  <meta name="description" content="A full-sample study of long-short returns around academic publication.">
   <title>Did Academic Research Kill the Anomalies?</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
@@ -16,6 +16,8 @@
       <a href="#method">Method</a>
       <a href="#results">Results</a>
       <a href="#explorer">Explorer</a>
+      <a href="#robustness">Robustness</a>
+      <a href="#data">Data</a>
       <a href="#limits">Limits</a>
     </nav>
   </header>
@@ -23,7 +25,7 @@
   <main id="top">
     <section class="hero" aria-labelledby="page-title">
       <div class="hero-copy">
-        <p class="eyebrow">FIN 331 · Research prototype · Seed 4</p>
+        <p class="eyebrow">FIN 331 · Final research · <span id="eligible-count">—</span> anomalies</p>
         <h1 id="page-title">Did academic research <em>kill</em> the anomalies?</h1>
         <p class="hero-deck">Do investment strategy returns decline after academic publication?</p>
       </div>
@@ -56,45 +58,94 @@
 <section class="intro section-wrap" id="results">
   <div class="section-heading">
     <span class="section-number">03</span>
-    <h2>Preliminary Results</h2>
+    <h2>Full-Sample Results</h2>
   </div>
 
   <div class="intro-copy">
-    <p>
-      In our five-anomaly prototype, all five strategies
-      have lower average monthly returns after publication
-      than during their original research samples.
-    </p>
-    <p>
-      These are descriptive findings, not evidence that
-      publication caused the declines. Our final analysis
-      will expand the sample and test these differences
-      more carefully.
-    </p>
+    <p>Across all <strong id="eligible-count-copy"></strong> eligible anomalies, average monthly long-short returns were lower after publication than in the original research samples. Returns declined overall, but this is descriptive evidence rather than a causal finding.</p>
+    <p>In our preferred panel regression, the broad decline remains statistically significant. It does not detect an additional statistically significant decline specifically after publication. We do not claim that publication caused the observed declines.</p>
+  </div>
+
+  <div class="key-stat-grid" aria-label="Full-sample key statistics">
+    <div><span id="original-average">—</span><small>Original-sample average</small></div>
+    <div><span id="post-average">—</span><small>Post-publication average</small></div>
+    <div><span id="declined-count">—</span><small>anomalies declined</small></div>
   </div>
 
   <div class="table-scroll">
     <table>
       <thead>
         <tr>
-          <th>Anomaly</th>
-          <th>Original Sample</th>
-          <th>Post-Publication</th>
-          <th>Change</th>
+          <th>Period</th>
+          <th>Equal-weighted mean monthly return</th>
+          <th>Anomaly-month observations</th>
         </tr>
       </thead>
-      <tbody id="results-table"></tbody>
+      <tbody id="period-results-table"></tbody>
     </table>
   </div>
 
-  <p class="table-note">
-    Average monthly long-short returns (%).
-    Changes are measured in percentage points per month.
-  </p>
+  <p class="table-note">Means are weighted equally across anomalies, not by the number of observations in each anomaly. Returns are percentage points per month.</p>
 </section>
 
+    <section class="method-band" id="inference">
+      <div class="section-wrap">
+        <div class="section-heading"><span class="section-number">03A</span><h2>Individual tests and multiple testing</h2></div>
+        <p class="section-lead">Each anomaly was tested separately using a two-sided Newey-West test. Benjamini-Hochberg adjustment was then applied across all <span class="dynamic-count"></span> tests at the saved false discovery rate.</p>
+        <div class="stat-strip">
+          <div><strong id="raw-significant">—</strong><span>significant before adjustment</span></div>
+          <div><strong id="bh-significant">—</strong><span>BH-significant</span></div>
+          <div><strong id="bh-declines">—</strong><span>BH-significant declines</span></div>
+        </div>
+        <div class="explorer-topline">
+          <p>Filter individual tests by result. Select a row to inspect the anomaly in the explorer.</p>
+          <label for="test-filter">Show
+            <select id="test-filter">
+              <option value="all">All anomalies</option>
+              <option value="bh_decline">BH-significant declines</option>
+              <option value="bh_increase">BH-significant increases</option>
+              <option value="unsignificant">Not BH-significant</option>
+            </select>
+          </label>
+        </div>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Anomaly</th><th>Original mean</th><th>Post mean</th><th>Change</th><th>Raw p</th><th>BH-adjusted p</th><th>Result</th></tr></thead>
+          <tbody id="tests-table"></tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <section class="intro section-wrap" id="regression">
+      <div class="section-heading"><span class="section-number">03B</span><h2>Panel regressions</h2></div>
+      <div class="intro-copy">
+        <p>The preferred specification includes anomaly fixed effects and calendar-month fixed effects, with standard errors clustered by calendar month. The post-sample indicator captures the change after the original sample; the post-publication indicator captures the additional change after publication.</p>
+        <p>The combined coefficient gives the overall original-to-post-publication change. These are associations, not estimates of causal publication effects.</p>
+      </div>
+      <div class="table-scroll">
+        <table><thead><tr><th>Specification</th><th>Post-sample</th><th>Additional post-publication</th><th>Total original to post</th></tr></thead><tbody id="regression-table"></tbody></table>
+      </div>
+      <p class="table-note">Coefficients are percentage points per month. Values below the coefficient show p-values.</p>
+    </section>
+
+    <section class="method-band" id="categories">
+      <div class="section-wrap">
+        <div class="section-heading"><span class="section-number">03C</span><h2>Economic category comparisons</h2></div>
+        <p class="section-lead">Category comparisons are exploratory averages across <span id="category-count"></span> economic categories. They are not formal tests of differences between categories.</p>
+        <label for="category-filter">Show
+          <select id="category-filter">
+            <option value="large">Categories with at least 5 anomalies</option>
+            <option value="all">All categories</option>
+          </select>
+        </label>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Category</th><th>Anomalies</th><th>Original mean</th><th>Post mean</th><th>Mean change</th><th>Declined</th><th>BH-significant declines</th></tr></thead>
+          <tbody id="categories-table"></tbody>
+        </table></div>
+      </div>
+    </section>
+
     <section class="explorer section-wrap" id="explorer">
-      <div class="section-heading"><span class="section-number">04</span><h2>Explore the returns</h2></div>
+      <div class="section-heading"><span class="section-number">04</span><h2>Explore all anomalies</h2></div>
       <div class="explorer-topline">
         <p>Choose an anomaly to see its mean monthly long-short return by year and period-level summaries.</p>
         <label for="anomaly-select">Anomaly <select id="anomaly-select" aria-label="Choose an anomaly"></select></label>
@@ -111,20 +162,87 @@
         <p class="chart-caption">Each point is the arithmetic mean of the available monthly returns in that calendar year. Values are not compounded or annualized.</p>
         <div class="stats-heading"><h3>Period summary</h3><span id="range-note"></span></div>
         <div class="table-scroll"><table>
-          <thead><tr><th scope="col">Comparison period</th><th scope="col">Mean / month</th><th scope="col">Median / month</th><th scope="col">Std. dev.</th><th scope="col">Months</th></tr></thead>
+          <thead><tr><th scope="col">Comparison period</th><th scope="col">Mean / month</th><th scope="col">Months</th></tr></thead>
           <tbody id="summary-table"></tbody>
         </table></div>
         <p class="table-note">Returns are percentage points per month. Summary values are arithmetic statistics across monthly observations.</p>
       </div>
     </section>
 
+    <section class="method-band" id="robustness">
+      <div class="section-wrap">
+        <div class="section-heading"><span class="section-number">05</span><h2>Robustness and sensitivity</h2></div>
+
+        <div class="robust-grid">
+          <article>
+            <p class="eyebrow">Equal-length windows</p>
+            <h3>Same number of observations</h3>
+            <p>For every anomaly, we compared the last N original-sample observations with the first N post-publication observations, where N was the smaller sample size.</p>
+            <div class="stat-strip compact">
+              <div><strong id="equal-declined">—</strong><span>declines</span></div>
+              <div><strong id="equal-bh">—</strong><span>BH-significant declines</span></div>
+              <div><strong id="equal-average-change">—</strong><span>average change</span></div>
+            </div>
+          </article>
+
+          <article>
+            <p class="eyebrow">Hypothetical trading costs</p>
+            <h3>Economic sensitivity, not actual trading difficulty</h3>
+            <p>We subtract <strong>assumed</strong> monthly costs from post-publication gross returns. These scenarios are hypothetical and do not directly test trading difficulty or implementation costs.</p>
+            <div class="table-scroll"><table>
+              <thead><tr><th>Monthly assumption</th><th>Average net return</th><th>Anomalies with positive net returns</th></tr></thead>
+              <tbody id="costs-table"></tbody>
+            </table></div>
+          </article>
+
+          <article>
+            <p class="eyebrow">Winsorized returns</p>
+            <h3>Preferred panel regression</h3>
+            <p>Monthly returns were capped at pooled 1st and 99th percentiles, then the preferred model was rerun. The cutoffs and capped-observation counts come directly from the saved robustness output.</p>
+            <div class="table-scroll"><table>
+              <thead><tr><th>Coefficient</th><th>Original</th><th>Winsorized</th><th>Winsorized p</th></tr></thead>
+              <tbody id="wins-table"></tbody>
+            </table></div>
+          </article>
+
+          <article>
+            <p class="eyebrow">Two-way clustering</p>
+            <h3>Uncertainty across anomalies and time</h3>
+            <p>We compare calendar-month-only clustering with two-way clustering by anomaly and calendar month. The coefficients are unchanged.</p>
+            <div class="table-scroll"><table>
+              <thead><tr><th>Coefficient</th><th>Month-only p</th><th>Two-way p</th></tr></thead>
+              <tbody id="cluster-table"></tbody>
+            </table></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro section-wrap" id="data">
+      <div class="section-heading"><span class="section-number">06</span><h2>Data and downloads</h2></div>
+      <div class="intro-copy">
+        <p>Data source: the October 2026 Open Asset Pricing release (<strong>202610</strong>), accessed with the <code>openassetpricing</code> Python package. We use published-signal metadata and monthly long-short returns from the original-paper portfolio collection.</p>
+      </div>
+      <div class="download-grid">
+        <a href="outputs/full_sample_summary.csv" download>Full-sample summary <span>CSV</span></a>
+        <a href="outputs/full_sample_tests.csv" download>Individual tests <span>CSV</span></a>
+        <a href="outputs/full_sample_regression.csv" download>Panel regressions <span>CSV</span></a>
+        <a href="outputs/full_sample_categories.csv" download>Economic categories <span>CSV</span></a>
+        <a href="outputs/full_sample_robustness.csv" download>Equal-length tests <span>CSV</span></a>
+        <a href="outputs/full_sample_economic.csv" download>Hypothetical cost scenarios <span>CSV</span></a>
+        <a href="outputs/full_sample_winsorized_regression.csv" download>Winsorized regression <span>CSV</span></a>
+        <a href="outputs/full_sample_two_way_clustering.csv" download>Two-way clustering <span>CSV</span></a>
+      </div>
+    </section>
+
     <section class="limits-band" id="limits">
       <div class="section-wrap limits-layout">
-        <div class="section-heading"><span class="section-number">05</span><h2>Read this as a prototype</h2></div>
+        <div class="section-heading"><span class="section-number">07</span><h2>Limitations</h2></div>
         <div class="limits-copy">
-          <p class="prototype-label">Five-anomaly prototype · Not final results</p>
-          <p>This explorer covers only Book-to-Market, Initial Public Offerings, 12-Month Momentum, Accruals, and Asset Growth. It is a descriptive comparison, not a causal test. A change after publication does not prove publication caused the change.</p>
-          <p>Returns may also reflect changing market conditions, trading costs, implementation choices, or data updates. We do not adjust for these factors here, and the original sample dates are metadata estimates rather than a common evaluation window.</p>
+          <p class="prototype-label">Full-sample results · Associational evidence</p>
+          <p>The project uses only anomalies meeting the saved eligibility rule. Publication year observations and observations before the original research sample are excluded because exact publication dates and common evaluation windows are unavailable.</p>
+          <p>Original-sample selection, different portfolio implementations, changing market conditions, data updates, and implementation choices may affect returns. Category comparisons are exploratory. Trading-cost scenarios are hypothetical; we have not directly tested actual trading difficulty or combined a direct trading-cost dataset with these returns.</p>
+          <p>Lower returns overall do not establish that publication caused the decline. In particular, the preferred panel regression identifies no additional statistically significant decline specifically after publication.</p>
         </div>
       </div>
     </section>
